@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 41 — ParaBank Exploratory Testing Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; color: var(--content-color-primary); padding: 16px; }
+  h1 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--content-color-primary); }
+  h2 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--content-color-primary); }
+  .meta { font-size: 11px; color: var(--content-color-secondary); margin-bottom: 16px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .summary-card { background: var(--background-color-secondary); border-radius: 6px; padding: 10px 12px; text-align: center; }
+  .summary-card .num { font-size: 22px; font-weight: 700; }
+  .summary-card .label { font-size: 10px; color: var(--content-color-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .num.pass { color: #27ae60; }
+  .num.fail { color: #e74c3c; }
+  .num.warn { color: #f39c12; }
+  .num.info { color: #3498db; }
+  .scenario { border: 1px solid var(--border-color-default); border-radius: 6px; margin-bottom: 12px; overflow: hidden; }
+  .scenario-header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--background-color-secondary); }
+  .scenario-num { font-size: 10px; font-weight: 700; color: var(--content-color-secondary); text-transform: uppercase; letter-spacing: 0.5px; min-width: 70px; }
+  .scenario-title { font-weight: 600; font-size: 13px; flex: 1; }
+  .badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .badge.pass { background: #d5f5e3; color: #1e8449; }
+  .badge.fail { background: #fadbd8; color: #c0392b; }
+  .badge.warn { background: #fef9e7; color: #b7770d; }
+  .badge.pending { background: var(--background-color-tertiary); color: var(--content-color-secondary); }
+  .scenario-body { padding: 10px 12px; }
+  .row { display: grid; grid-template-columns: 110px 1fr; gap: 6px; margin-bottom: 6px; font-size: 12px; }
+  .row-label { color: var(--content-color-secondary); font-weight: 600; padding-top: 1px; }
+  .row-value { color: var(--content-color-primary); }
+  .status-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+  .s200 { background: #d5f5e3; color: #1e8449; }
+  .s400 { background: #fadbd8; color: #c0392b; }
+  .s401 { background: #fdebd0; color: #a04000; }
+  .divider { border: none; border-top: 1px solid var(--border-color-default); margin: 8px 0; }
+  .finding { background: #fef9e7; border-left: 3px solid #f39c12; border-radius: 0 4px 4px 0; padding: 7px 10px; font-size: 12px; margin-top: 6px; }
+  .finding.defect { background: #fadbd8; border-left-color: #e74c3c; }
+  .finding.ok { background: #d5f5e3; border-left-color: #27ae60; }
+  .finding-label { font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .finding.defect .finding-label { color: #c0392b; }
+  .finding.warn .finding-label { color: #b7770d; }
+  .finding.ok .finding-label { color: #1e8449; }
+  .incomplete-note { background: var(--background-color-secondary); border-radius: 6px; padding: 10px 12px; font-size: 12px; color: var(--content-color-secondary); border: 1px dashed var(--border-color-default); margin-bottom: 12px; }
+  .footer { font-size: 10px; color: var(--content-color-secondary); text-align: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color-default); }
+  .tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px; background: var(--background-color-tertiary); color: var(--content-color-secondary); margin-right: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Day 41 — ParaBank: UI-to-API Exploratory Testing</h1>
+<p class="meta">Collection: Day 41 ParaBank Collection &nbsp;·&nbsp; Environment: Day 41 ParaBank Environment &nbsp;·&nbsp; Date: 11 Oct 2026 &nbsp;·&nbsp; Tester: INTO THE ANIMEVERSE</p>
+
+<!-- Summary -->
+<div class="summary-grid">
+  <div class="summary-card"><div class="num pass">1</div><div class="label">Passed</div></div>
+  <div class="summary-card"><div class="num warn">1</div><div class="label">Under Review</div></div>
+  <div class="summary-card"><div class="num fail">0</div><div class="label">Confirmed Defects</div></div>
+  <div class="summary-card"><div class="num info">2</div><div class="label">Scenarios Run</div></div>
+</div>
+
+<!-- Scenario 1 -->
+<div class="scenario">
+  <div class="scenario-header">
+    <span class="scenario-num">Scenario 1</span>
+    <span class="scenario-title">Login — Request–Response Integrity</span>
+    <span class="badge pass">Passed</span>
+  </div>
+  <div class="scenario-body">
+    <div class="row"><span class="row-label">Focus Area</span><span class="row-value"><span class="tag">Request–Response Integrity</span></span></div>
+    <div class="row"><span class="row-label">Endpoint</span><span class="row-value"><code>GET {{baseUrl}}/login/{{username}}/{{password}}</code></span></div>
+    <div class="row"><span class="row-label">Credentials</span><span class="row-value">john / demo (valid)</span></div>
+    <hr class="divider"/>
+    <div class="row"><span class="row-label">Status Code</span><span class="row-value"><span class="status-pill s200">200 OK</span></span></div>
+    <div class="row"><span class="row-label">Response Body</span><span class="row-value">Customer object returned — id, firstName, lastName, address, phoneNumber, ssn</span></div>
+    <div class="row"><span class="row-label">Content-Type</span><span class="row-value">application/xml</span></div>
+    <div class="row"><span class="row-label">Response Time</span><span class="row-value">Normal (no timeout or delay observed)</span></div>
+    <div class="finding ok">
+      <div class="finding-label">Result</div>
+      Server returned the correct customer profile for valid credentials. Status code, body, and content type all match expected behavior. No defect found.
+    </div>
+  </div>
+</div>
+
+<!-- Scenario 2 -->
+<div class="scenario">
+  <div class="scenario-header">
+    <span class="scenario-num">Scenario 2</span>
+    <span class="scenario-title">Login — Server-Side Validation with Invalid Credentials</span>
+    <span class="badge warn">Under Review</span>
+  </div>
+  <div class="scenario-body">
+    <div class="row"><span class="row-label">Focus Area</span><span class="row-value"><span class="tag">Server-Side Validation</span></span></div>
+    <div class="row"><span class="row-label">Endpoint</span><span class="row-value"><code>GET {{baseUrl}}/login/{username}/{password}</code></span></div>
+    <hr class="divider"/>
+    <div class="row"><span class="row-label">Test A</span><span class="row-value">john / wrongpassword (wrong password)</span></div>
+    <div class="row"><span class="row-label">Test B</span><span class="row-value">nobody / demo (non-existent user)</span></div>
+    <hr class="divider"/>
+    <div class="row"><span class="row-label">Status Code</span><span class="row-value"><span class="status-pill s200">200 OK</span> — observed on one or both tests</span></div>
+    <div class="row"><span class="row-label">Expected</span><span class="row-value"><span class="status-pill s401">401 Unauthorized</span> or <span class="status-pill s400">400 Bad Request</span></span></div>
+    <div class="row"><span class="row-label">Response Body</span><span class="row-value">⚠ Not yet confirmed — awaiting tester observation</span></div>
+    <div class="finding">
+      <div class="finding-label">⚠ Pending Confirmation</div>
+      A <strong>200 OK</strong> was returned for invalid credentials. The severity depends on the response body:<br/><br/>
+      &bull; <strong>Customer object returned</strong> → Confirmed authentication bypass defect (Critical)<br/>
+      &bull; <strong>Error message in body</strong> → Incorrect HTTP status code usage (API design defect, Low)<br/>
+      &bull; <strong>Empty body</strong> → Poor error handling, ambiguous behavior (Medium)
+    </div>
+  </div>
+</div>
+
+<!-- Incomplete note -->
+<div class="incomplete-note">
+  ⏳ <strong>Session in progress.</strong> Scenario 2 is awaiting response body confirmation before a defect verdict can be issued. Additional scenarios (HTTP method behavior, UI–API consistency, state consistency) have not yet been executed.
+</div>
+
+<div class="footer">ParaBank · https://parabank.parasoft.com/parabank/ &nbsp;·&nbsp; 90-Day-QA-Challenge workspace &nbsp;·&nbsp; Report generated during active session</div>
+
+</body>
+</html>

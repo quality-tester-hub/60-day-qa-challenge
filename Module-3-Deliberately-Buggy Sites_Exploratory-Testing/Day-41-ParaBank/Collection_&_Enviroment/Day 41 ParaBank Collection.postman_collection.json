@@ -1,0 +1,190 @@
+{
+  "info": {
+    "_postman_id": "a0850f25-4120-45a1-9ffd-bc7a982e4592",
+    "name": "Day 41 ParaBank Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55615134",
+    "_collection_link": "https://go.postman.co/collection/55615134-a0850f25-4120-45a1-9ffd-bc7a982e4592?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get Customer Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/customers/{{customerId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "customers",
+            "{{customerId}}"
+          ]
+        },
+        "description": "Retrieves customer details for the given customerId. Requires a valid customerId. Inspect the HTTP status code (expect 200 OK), response body (customer object), response headers, and response time. Determine whether the server returned a response or encountered a timeout/network failure."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Customer Accounts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/customers/{{customerId}}/accounts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "customers",
+            "{{customerId}}",
+            "accounts"
+          ]
+        },
+        "description": "Retrieves all accounts for the given customerId. Inspect the HTTP status code (expect 200 OK), response body (list of accounts), response headers, and response time. Determine whether the server returned a response or encountered a timeout/network failure."
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/login/{{username}}/{{password}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "login",
+            "{{username}}",
+            "{{password}}"
+          ]
+        },
+        "description": "Authenticates the user using username and password passed as path parameters. Inspect the HTTP status code (expect 200 OK), response body (customer object with customerId), response headers, and response time. Determine whether the server returned a response or encountered a timeout/network failure."
+      },
+      "response": [
+        {
+          "name": "Login",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/login/{{username}}/{{password}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login",
+                "{{username}}",
+                "{{password}}"
+              ]
+            }
+          },
+          "_postman_previewlanguage": "html",
+          "header": [
+            {
+              "key": ":status",
+              "value": "400"
+            },
+            {
+              "key": "date",
+              "value": "Sun, 11 Oct 2026 04:00:54 GMT"
+            },
+            {
+              "key": "content-type",
+              "value": "text/html;charset=utf-8"
+            },
+            {
+              "key": "server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "content-language",
+              "value": "en"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
+              "key": "cf-ray",
+              "value": "a48af5deda4ffa33-IXC"
+            }
+          ],
+          "cookie": [],
+          "body": "<!doctype html><html lang=\"en\"><head><title>HTTP Status 400 – Bad Request</title><style type=\"text/css\">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 400 – Bad Request</h1><hr class=\"line\" /><p><b>Type</b> Exception Report</p><p><b>Message</b> Invalid character found in the request target [&#47;parabank&#47;services&#47;bank&#47;login&#47;{{username}}&#47;{{password}} ]. The valid characters are defined in RFC 7230 and RFC 3986</p><p><b>Description</b> The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).</p><p><b>Exception</b></p><pre>java.lang.IllegalArgumentException: Invalid character found in the request target [&#47;parabank&#47;services&#47;bank&#47;login&#47;{{username}}&#47;{{password}} ]. The valid characters are defined in RFC 7230 and RFC 3986\n\torg.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:481)\n\torg.apache.coyote.http11.Http11Processor.service(Http11Processor.java:279)\n\torg.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71)\n\torg.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307)\n\torg.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2201)\n\torg.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74)\n\torg.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949)\n\torg.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483)\n\torg.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74)\n\tjava.base&#47;java.lang.Thread.run(Unknown Source)\n</pre><p><b>Note</b> The full stack trace of the root cause is available in the server logs.</p><hr class=\"line\" /><h3>Apache Tomcat/11.0.26</h3></body></html>"
+        }
+      ]
+    },
+    {
+      "name": "Create Account",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/createAccount?customerId={{customerId}}&newAccountType=0&fromAccountId={{fromAccountId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "createAccount"
+          ],
+          "query": [
+            {
+              "key": "customerId",
+              "value": "{{customerId}}"
+            },
+            {
+              "key": "newAccountType",
+              "value": "0"
+            },
+            {
+              "key": "fromAccountId",
+              "value": "{{fromAccountId}}"
+            }
+          ]
+        },
+        "description": "Creates a new account for the given customer. newAccountType: 0 = CHECKING, 1 = SAVINGS. fromAccountId is the account to fund the new account from. Inspect the HTTP status code (expect 200 OK), response body (new account object), response headers, and response time. Determine whether the server returned a response or encountered a timeout/network failure."
+      },
+      "response": []
+    },
+    {
+      "name": "Transfer Funds",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/transfer?fromAccountId={{fromAccountId}}&toAccountId={{toAccountId}}&amount={{amount}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "transfer"
+          ],
+          "query": [
+            {
+              "key": "fromAccountId",
+              "value": "{{fromAccountId}}"
+            },
+            {
+              "key": "toAccountId",
+              "value": "{{toAccountId}}"
+            },
+            {
+              "key": "amount",
+              "value": "{{amount}}"
+            }
+          ]
+        },
+        "description": "Transfers funds between two accounts. Inspect the HTTP status code (expect 200 OK), response body, response headers, and response time. Determine whether the server returned a response or encountered a timeout/network failure."
+      },
+      "response": []
+    }
+  ]
+}

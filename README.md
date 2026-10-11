@@ -1585,6 +1585,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 8, 2026 | Day 38 | Ministry of Testing (ministryoftesting.com) | Fetch/XHR Network Traffic, Request Payloads, Response Status Codes & Response Bodies | ✅ Completed |
 | October 9, 2026 | Day 39 | Evil Tester Console Driver (testpages.eviltester.com) | DevTools Console Execution, Game Loop Validation, Console Rendering & HAR Network Analysis | ✅ Completed |
 | October 10, 2026 | Day 40 | Agile Travel (travel.agileway.net) | Flight Booking Workflow, API Gateway Errors (502 Bad Gateway) & Past-Date Validation | ✅ Completed |
+| October 11, 2026 | Day 41 | ParaBank (parabank.parasoft.com) | UI-to-API Exploratory Testing with Postman, Negative Login Testing & URI Path Credential Handling | ✅ Completed |
 
 ---
 
@@ -3384,6 +3385,112 @@ Day-40-AgileTravel/
 
 ---
 
+### 🗓️ October 11, 2026 — Day 41: ParaBank UI-to-API Exploratory Testing (/Day-41-ParaBank)
+
+#### Objective
+
+Investigate ParaBank's HTTP/API behavior with Postman and compare it with the UI. The focus is on negative testing and lower-level behavior that ordinary UI testing may not reveal.
+
+#### Environment and Collection
+
+- **Postman environment:** Day 41 ParaBank Environment
+- **Postman collection:** Day 41 ParaBank Collection
+- **Base URL:** `https://parabank.parasoft.com/parabank`
+
+The Get Customer Accounts request has a post-response script that extracts the first account ID from the XML response and saves it as `fromAccountId`. This variable is used by the Create Account request.
+
+#### Testing Summary
+
+**Positive scenario — Login request/response**
+
+- **Request:** `GET {{baseUrl}}/login/john/demo`
+- **Observed result:** 200 OK
+- **Status:** Passed for the observed request. The response contained a customer XML object.
+
+**Negative scenario — Invalid login credentials**
+
+Requests tested:
+
+- `GET {{baseUrl}}/login/john/wrongpassword`
+- `GET {{baseUrl}}/login/nobody/demo`
+
+The status code alone is insufficient to determine whether authentication was incorrectly accepted. Review the response body and confirm whether it contains a customer object or an authentication-failure response before reporting an authentication bypass.
+
+**Negative scenario — URI path contains unexpanded Postman variables**
+
+- **Evidence file:** `Evidence/01-Rejects URI Path Credentials.html`
+- **Observed result:** HTTP 400 Bad Request
+- **Observed message:** Tomcat reports an invalid character in the request target when the URI contains literal braces from `{{username}}` and `{{password}}`.
+
+**Interpretation:** This evidence shows that the malformed request target was rejected. It does not, by itself, prove that the application's authentication implementation is defective. The immediate cause is consistent with Postman variables not being resolved before the request was sent, or with unencoded characters in the URI.
+
+The use of credentials in URL paths is also a security/design concern because URLs can be retained in logs and other diagnostic records. Treat that as a separate design observation, not as proof that the Tomcat 400 response is an application bug.
+
+#### Bug Report — Apache Tomcat Rejects URI Path Credentials with HTTP 400 Bad Request
+
+**User Perspective:**
+
+As a developer or QA engineer interacting with the ParaBank REST API services, passing unencoded variables directly within the request URI path (e.g., `/parabank/services/bank/login/{{username}}/{{password}}`) causes Apache Tomcat to throw an `IllegalArgumentException` due to invalid characters violating RFC 7230 and RFC 3986. This results in an HTTP Status 400 – Bad Request error response.
+
+**1. Title:**
+
+[API / Security Defect] Passing unencoded credentials via URL path triggers Apache Tomcat RFC 7230/3986 violation (HTTP Status 400)
+
+**2. Environment:**
+
+- **OS:** macOS / Windows / Linux
+- **Server:** Apache Tomcat/11.0.26
+- **Client:** Postman API Client / REST Client
+- **Build/URL:** ParaBank REST Services (`/parabank/services/bank/login/{username}/{password}`)
+
+**3. Steps to Reproduce:**
+
+1. Construct a REST API request targeting the ParaBank login service using path parameters for credentials: `/parabank/services/bank/login/{{username}}/{{password}}`.
+2. Send the request via Postman or an HTTP client without proper URL encoding or by passing raw placeholder strings.
+3. Observe the HTTP response code and server error page.
+
+**4. Actual Result:**
+
+Apache Tomcat rejects the request with an HTTP Status 400 – Bad Request and throws a `java.lang.IllegalArgumentException: Invalid character found in the request target` because the target URL contains unencoded characters violating RFC 7230 and RFC 3986.
+
+**5. Expected Result:**
+
+Authentication endpoints should accept credentials securely via request body payloads (POST) or query parameters rather than exposing sensitive credentials directly within the URI path structure.
+
+**6. Severity:** High (Breaks API endpoint accessibility and exposes poor architectural design regarding credential transmission).
+
+**7. Priority:** P1 — High (Requires refactoring the API endpoint to utilize proper request bodies or query parameters for authentication).
+
+**8. Evidence:**
+
+Server HTML response error log:
+
+```text
+HTTP Status 400 – Bad Request
+Message: Invalid character found in the request target [/parabank/services/bank/login/{{username}}/{{password}} ]. The valid characters are defined in RFC 7230 and RFC 3986
+Exception: java.lang.IllegalArgumentException: Invalid character found in the request target
+    at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:481)
+Apache Tomcat/11.0.26
+```
+
+#### Project Structure
+
+```text
+Day-41-ParaBank/
+├── Collection_&_Enviroment/
+│   ├── Day 41 ParaBank Collection.postman_collection.json
+│   └── Day 41 ParaBank Environment.postman_environment.json
+├── Defects_&_Bugreports/
+│   └── 01-Rejects URI Path Credentials.md
+├── Evidence/
+│   └── 01-Rejects URI Path Credentials.html
+├── Successful_Runs/
+│   └── Day-41-ParaBank-Exploratory-Testing...html
+└── README.md
+```
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
@@ -3823,15 +3930,27 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 │   │   └── 02-Continuously Expands
 │   └── README.md
 │
-└── Day-40-AgileTravel/
+├── Day-40-AgileTravel/
+│   ├── Defects_&_Bugreports/
+│   │   ├── 01-502 Bad Gateway Errors.md
+│   │   └── 02-Past Flight Dates Accepted.md
+│   ├── Evidence/
+│   │   ├── Screenshots/
+│   │   ├── 01-502 Bad Gateway Errors.collection.json
+│   │   ├── 01-502 Bad Gateway Errors.environment.json
+│   │   └── 02-Past-Flight-Dates-Accepted.png
+│   └── README.md
+│
+└── Day-41-ParaBank/
+    ├── Collection_&_Enviroment/
+    │   ├── Day 41 ParaBank Collection.postman_collection.json
+    │   └── Day 41 ParaBank Environment.postman_environment.json
     ├── Defects_&_Bugreports/
-    │   ├── 01-502 Bad Gateway Errors.md
-    │   └── 02-Past Flight Dates Accepted.md
+    │   └── 01-Rejects URI Path Credentials.md
     ├── Evidence/
-    │   ├── Screenshots/
-    │   ├── 01-502 Bad Gateway Errors.collection.json
-    │   ├── 01-502 Bad Gateway Errors.environment.json
-    │   └── 02-Past-Flight-Dates-Accepted.png
+    │   └── 01-Rejects URI Path Credentials.html
+    ├── Successful_Runs/
+    │   └── Day-41-ParaBank-Exploratory-Testing...html
     └── README.md
 ```
 
@@ -3869,7 +3988,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 40 — Agile Travel exploratory testing
+**Latest Milestone:** Day 41 — ParaBank UI-to-API exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -3893,11 +4012,13 @@ Day 39 continued Module 3 with exploratory testing of the Evil Tester Console Dr
 
 Day 40 continued Module 3 with exploratory testing of the Agile Travel flight-booking workflow and API endpoints, documenting two defects: core endpoints reportedly returning 502 Bad Gateway (Critical / P1) and past flight dates being accepted and proceeding to Passenger Details (Medium / P2). See the [Day 40 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-40-AgileTravel/README.md).
 
+Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman, covering a positive login request, negative invalid-credential requests, and a request with unexpanded `{{username}}`/`{{password}}` path variables that Tomcat rejected with HTTP 400. The investigation also records credentials-in-URL-path as a separate security/design concern. See the [Day 41 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-41-ParaBank/README.md).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41
 
 **Completed Modules:** Module 1, Module 2
 
@@ -3907,6 +4028,6 @@ Day 40 continued Module 3 with exploratory testing of the Agile Travel flight-bo
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 40 — Agile Travel exploratory testing
+**Latest Milestone:** Day 41 — ParaBank UI-to-API exploratory testing
 
 **Next Milestone:** Module 3 — Buggy Sites / Exploratory Testing
