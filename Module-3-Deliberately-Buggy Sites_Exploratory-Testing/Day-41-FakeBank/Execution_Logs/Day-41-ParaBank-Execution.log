@@ -1,0 +1,41 @@
+Day 41 — ParaBank UI-to-API Exploratory Testing
+Execution date: 2026-10-11
+Target: https://parabank.parasoft.com/parabank
+Collection: Day 41 ParaBank Collection
+Environment: Day 41 ParaBank Environment
+
+Execution summary
+-----------------
+Scenarios in the saved run report: 2
+Passed: 1
+Under review: 1
+Confirmed defects: 0
+
+Scenario 1 — Valid login
+-----------------------
+Request: GET /parabank/services/bank/login/{username}/{password}
+Test data: Valid practice-account credentials configured in the Postman environment
+Observed: HTTP 200; application/xml; customer profile XML object returned
+Result: Passed for this observed request
+
+Scenario 2 — Invalid login credentials
+--------------------------------------
+Requests:
+  GET /parabank/services/bank/login/john/wrongpassword
+  GET /parabank/services/bank/login/nobody/demo
+Observed: HTTP 200 was recorded on one or both requests. The response body was not confirmed in the run report.
+Result: Under review. No authentication-bypass defect was confirmed; inspect the body before deciding whether a customer object was returned.
+
+Additional request evidence — Unexpanded path variables
+-------------------------------------------------------
+Request target included literal Postman placeholders:
+  /parabank/services/bank/login/{{username}}/{{password}}
+Observed: HTTP 400 Bad Request from Apache Tomcat/11.0.26.
+Evidence: Evidence/01-Rejects URI Path Credentials.html
+Result: The request was rejected for invalid request-target characters. This demonstrates the malformed, unexpanded request; it does not establish an authentication defect.
+
+Notes
+-----
+- The captured run report records one passing scenario and one scenario awaiting response-body confirmation.
+- Do not interpret HTTP 200 alone as proof that invalid credentials authenticated successfully.
+- No further test outcomes are inferred in this log.

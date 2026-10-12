@@ -1,0 +1,10 @@
+FakeRESTApi sequential GET evidence
+Endpoint: GET /api/v1/Books/1
+Date: 2026-10-12 UTC
+Method: five read-only requests; no writes
+
+2026-10-12T13:49:02Z GET /api/v1/Books/1 status=200 body={"id":1,"title":"Book 1","publishDate":"2026-10-11T13:49:04.35385+00:00"}
+2026-10-12T13:49:04Z GET /api/v1/Books/1 status=200 body={"id":1,"title":"Book 1","publishDate":"2026-10-11T13:49:05.4707861+00:00"}
+2026-10-12T13:49:05Z GET /api/v1/Books/1 status=200 body={"id":1,"title":"Book 1","publishDate":"2026-10-11T13:49:06.3793116+00:00"}
+2026-10-12T13:49:06Z GET /api/v1/Books/1 status=200 body={"id":1,"title":"Book 1","publishDate":"2026-10-11T13:49:07.4527815+00:00"}
+2026-10-12T13:49:07Z GET /api/v1/Books/1 status=200 body={"id":1,"title":"Book 1","publishDate":"2026-10-11T13:49:08.5242884+00:00"}

@@ -1,0 +1,10 @@
+FakeRESTApi sequential GET evidence
+Endpoint: GET /api/v1/Activities/1
+Date: 2026-10-12 UTC
+Method: five read-only requests; no writes
+
+2026-10-12T13:49:02Z GET /api/v1/Activities/1 status=200 body={"id":1,"title":"Activity 1","dueDate":"2026-10-12T14:49:04.3387099+00:00","completed":false}
+2026-10-12T13:49:04Z GET /api/v1/Activities/1 status=200 body={"id":1,"title":"Activity 1","dueDate":"2026-10-12T14:49:05.4728589+00:00","completed":false}
+2026-10-12T13:49:05Z GET /api/v1/Activities/1 status=200 body={"id":1,"title":"Activity 1","dueDate":"2026-10-12T14:49:06.3797815+00:00","completed":false}
+2026-10-12T13:49:06Z GET /api/v1/Activities/1 status=200 body={"id":1,"title":"Activity 1","dueDate":"2026-10-12T14:49:07.4522595+00:00","completed":false}
+2026-10-12T13:49:07Z GET /api/v1/Activities/1 status=200 body={"id":1,"title":"Activity 1","dueDate":"2026-10-12T14:49:08.5228396+00:00","completed":false}

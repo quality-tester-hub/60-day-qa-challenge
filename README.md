@@ -1586,6 +1586,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 9, 2026 | Day 39 | Evil Tester Console Driver (testpages.eviltester.com) | DevTools Console Execution, Game Loop Validation, Console Rendering & HAR Network Analysis | ✅ Completed |
 | October 10, 2026 | Day 40 | Agile Travel (travel.agileway.net) | Flight Booking Workflow, API Gateway Errors (502 Bad Gateway) & Past-Date Validation | ✅ Completed |
 | October 11, 2026 | Day 41 | ParaBank (parabank.parasoft.com) | UI-to-API Exploratory Testing with Postman, Negative Login Testing & URI Path Credential Handling | ✅ Completed |
+| October 12, 2026 | Day 42 | FakeRESTApi (fakerestapi.azurewebsites.net) | Swagger/OpenAPI Exploration, API Read Consistency & Evidence-Based Bug Reporting | ✅ Completed |
 
 ---
 
@@ -3941,16 +3942,29 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 │   │   └── 02-Past-Flight-Dates-Accepted.png
 │   └── README.md
 │
-└── Day-41-ParaBank/
-    ├── Collection_&_Enviroment/
-    │   ├── Day 41 ParaBank Collection.postman_collection.json
-    │   └── Day 41 ParaBank Environment.postman_environment.json
+├── Day-41-ParaBank/
+│   ├── Collection_&_Enviroment/
+│   │   ├── Day 41 ParaBank Collection.postman_collection.json
+│   │   └── Day 41 ParaBank Environment.postman_environment.json
+│   ├── Defects_&_Bugreports/
+│   │   └── 01-Rejects URI Path Credentials.md
+│   ├── Evidence/
+│   │   └── 01-Rejects URI Path Credentials.html
+│   ├── Successful_Runs/
+│   │   └── Day-41-ParaBank-Exploratory-Testing...html
+│   └── README.md
+│
+└── Day-42-FakeRest/
     ├── Defects_&_Bugreports/
-    │   └── 01-Rejects URI Path Credentials.md
+    │   ├── 01-Authors-read-inconsistency.md
+    │   ├── 02-Activity-due-date-changes-on-read.md
+    │   ├── 03-Book-publish-date-changes-on-read.md
+    │   └── 04-CoverPhoto-url-is-not-a-valid-uri.md
     ├── Evidence/
-    │   └── 01-Rejects URI Path Credentials.html
-    ├── Successful_Runs/
-    │   └── Day-41-ParaBank-Exploratory-Testing...html
+    │   ├── 01-authors-read-inconsistency.log
+    │   ├── 02-activity-due-date-changes-on-read.log
+    │   ├── 03-book-publish-date-changes-on-read.log
+    │   └── 04-cover-photo-invalid-uri.log
     └── README.md
 ```
 
@@ -3988,7 +4002,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 41 — ParaBank UI-to-API exploratory testing
+**Latest Milestone:** Day 42 — FakeRESTApi exploratory API testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4014,11 +4028,15 @@ Day 40 continued Module 3 with exploratory testing of the Agile Travel flight-bo
 
 Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman, covering a positive login request, negative invalid-credential requests, and a request with unexpanded `{{username}}`/`{{password}}` path variables that Tomcat rejected with HTTP 400. The investigation also records credentials-in-URL-path as a separate security/design concern. See the [Day 41 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-41-ParaBank/README.md).
 
+### 🗓️ October 12, 2026 — Day 42: FakeRESTApi Exploratory API Testing (/Day-42-FakeRest)
+
+Explored the public Swagger UI and read-only API endpoints, documenting four defects: inconsistent Authors lookup/list data; changing Activity due dates and Book publication dates across repeated GETs; and a CoverPhoto URL that violates its OpenAPI URI format and is rejected by `curl`. See the [Day 42 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/README.md), [four bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Defects_&_Bugreports/), and [evidence logs](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Evidence/).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4028,6 +4046,6 @@ Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 41 — ParaBank UI-to-API exploratory testing
+**Latest Milestone:** Day 42 — FakeRESTApi exploratory API testing
 
 **Next Milestone:** Module 3 — Buggy Sites / Exploratory Testing

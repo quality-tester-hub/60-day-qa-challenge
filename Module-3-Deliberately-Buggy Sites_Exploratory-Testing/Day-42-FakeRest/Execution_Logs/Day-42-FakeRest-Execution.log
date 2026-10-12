@@ -1,0 +1,43 @@
+Day 42 — FakeRESTApi Exploratory API Testing
+Execution date: 2026-10-12
+Target: https://fakerestapi.azurewebsites.net/index.html
+API base URL: https://fakerestapi.azurewebsites.net/api/v1
+Client: curl; Swagger UI / OpenAPI inspection
+
+Execution scope
+---------------
+Read-only API requests (GET) and schema inspection. No POST, PUT, or DELETE requests were sent.
+
+BUG-01 — Authors read consistency
+---------------------------------
+Request: GET /api/v1/Authors/606 (10 sequential requests)
+Observed: 4 HTTP 200 responses and 6 HTTP 404 responses. Successful bodies reported varying idBook values.
+Collection check: GET /api/v1/Authors (8 sequential requests), all HTTP 200; returned counts were 605, 611, 608, 589, 609, 613, 599, and 609.
+Evidence: Evidence/01-authors-read-inconsistency.log
+Result: Repeated reads produced inconsistent resource availability and collection sizes.
+
+BUG-02 — Activity dueDate changes on read
+-----------------------------------------
+Request: GET /api/v1/Activities/1 (5 sequential requests)
+Observed: All HTTP 200; each response returned a different dueDate.
+Evidence: Evidence/02-activity-due-date-changes-on-read.log
+Result: The dueDate changed across reads without any write request.
+
+BUG-03 — Book publishDate changes on read
+------------------------------------------
+Request: GET /api/v1/Books/1 (5 sequential requests)
+Observed: All HTTP 200; each response returned a different publishDate.
+Evidence: Evidence/03-book-publish-date-changes-on-read.log
+Result: The publishDate changed across reads without any write request.
+
+BUG-04 — CoverPhoto URL violates URI format
+--------------------------------------------
+Schema: CoverPhoto.url is declared as a string with OpenAPI format "uri".
+Request: GET /api/v1/CoverPhotos/1
+Observed: HTTP 200 returned a URL with a raw space in the query value ("Book 1"). Passing the value unchanged to curl failed with error 3, URL rejected as malformed (HTTP 000; request was not made).
+Evidence: Evidence/04-cover-photo-invalid-uri.log
+Result: The returned value could not be consumed unchanged by this strict URI client.
+
+Overall
+-------
+Four findings were documented with individual bug reports and evidence files. Findings describe observed responses and client behavior; no server-side cause was established.

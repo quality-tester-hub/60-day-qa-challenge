@@ -1,0 +1,15 @@
+FakeRESTApi CoverPhoto URL validation evidence
+Date: 2026-10-12 UTC
+Endpoint: GET /api/v1/CoverPhotos/1
+Published schema: CoverPhoto.url type=string, format=uri
+
+OpenAPI schema excerpt:
+{"type":"string","format":"uri","nullable":true}
+
+API response:
+{"id":1,"idBook":1,"url":"https://placeholdit.imgix.net/~text?txtsize=33&txt=Book 1&w=250&h=350"}
+HTTP_STATUS=200
+
+Client attempt using returned raw URL:
+curl: (3) URL rejected: Malformed input to a URL function
+HTTP=000 final=https://placeholdit.imgix.net/~text?txtsize=33&txt=Book 1&w=250&h=350

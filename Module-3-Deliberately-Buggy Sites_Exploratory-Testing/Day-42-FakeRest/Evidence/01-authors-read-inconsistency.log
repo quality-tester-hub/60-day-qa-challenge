@@ -1,0 +1,25 @@
+FakeRESTApi live read-only evidence
+Target: https://fakerestapi.azurewebsites.net
+Run date: 2026-10-12 (UTC timestamps below)
+Method: sequential GET requests only; no POST/PUT/DELETE sent
+
+2026-10-12T13:39:47Z GET /api/v1/Authors/606 status=200 body={"id":606,"idBook":197,"firstName":"First Name 606","lastName":"Last Name 606"}
+2026-10-12T13:39:48Z GET /api/v1/Authors/606 status=200 body={"id":606,"idBook":200,"firstName":"First Name 606","lastName":"Last Name 606"}
+2026-10-12T13:39:49Z GET /api/v1/Authors/606 status=200 body={"id":606,"idBook":198,"firstName":"First Name 606","lastName":"Last Name 606"}
+2026-10-12T13:39:50Z GET /api/v1/Authors/606 status=200 body={"id":606,"idBook":200,"firstName":"First Name 606","lastName":"Last Name 606"}
+2026-10-12T13:39:51Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-a805d62db614de478944f51d96196ec4-ab1396428c4e4c40-00"}
+2026-10-12T13:39:52Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-f29cb7b63da1c7488565a82f2923f1d4-bcf5bc2386528540-00"}
+2026-10-12T13:39:53Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-ac9edd859315814f9be36ec1bb2674e9-62a68182de99d340-00"}
+2026-10-12T13:39:54Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-ace4511c4e94e746bce905b38f268889-9f94d5397dfd5f4e-00"}
+2026-10-12T13:39:55Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-82b0a1a80d4e674f85767705ecffe0e7-52837249c9224c40-00"}
+2026-10-12T13:39:56Z GET /api/v1/Authors/606 status=404 body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-e4465840fbc4fc469b5002223a20fd74-a42af161896ed140-00"}
+
+Authors collection samples:
+2026-10-12T13:39:57Z GET /api/v1/Authors status=200 count=605, firstId=1, lastId=605
+2026-10-12T13:39:59Z GET /api/v1/Authors status=200 count=611, firstId=1, lastId=611
+2026-10-12T13:40:00Z GET /api/v1/Authors status=200 count=608, firstId=1, lastId=608
+2026-10-12T13:40:02Z GET /api/v1/Authors status=200 count=589, firstId=1, lastId=589
+2026-10-12T13:40:03Z GET /api/v1/Authors status=200 count=609, firstId=1, lastId=609
+2026-10-12T13:40:05Z GET /api/v1/Authors status=200 count=613, firstId=1, lastId=613
+2026-10-12T13:40:07Z GET /api/v1/Authors status=200 count=599, firstId=1, lastId=599
+2026-10-12T13:40:08Z GET /api/v1/Authors status=200 count=609, firstId=1, lastId=609
