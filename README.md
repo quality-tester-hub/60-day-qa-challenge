@@ -1587,6 +1587,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 10, 2026 | Day 40 | Agile Travel (travel.agileway.net) | Flight Booking Workflow, API Gateway Errors (502 Bad Gateway) & Past-Date Validation | ✅ Completed |
 | October 11, 2026 | Day 41 | ParaBank (parabank.parasoft.com) | UI-to-API Exploratory Testing with Postman, Negative Login Testing & URI Path Credential Handling | ✅ Completed |
 | October 12, 2026 | Day 42 | FakeRESTApi (fakerestapi.azurewebsites.net) | Swagger/OpenAPI Exploration, API Read Consistency & Evidence-Based Bug Reporting | ✅ Completed |
+| October 13, 2026 | Day 43 | BookMyShow India (in.bookmyshow.com) | Homepage Review, Single Read-Only Request Attempt & Review of Existing Location-Routing Evidence | ✅ Completed |
 
 ---
 
@@ -3492,6 +3493,53 @@ Day-41-ParaBank/
 
 ---
 
+### 🗓️ October 12, 2026 — Day 42: FakeRESTApi Exploratory API Testing (/Day-42-FakeRest)
+
+#### Objective and Scope
+
+Inspected the public Swagger UI and explored the FakeRESTApi v1 endpoints using read-only GET requests. No POST, PUT, or DELETE requests were sent.
+
+- **Swagger UI:** `https://fakerestapi.azurewebsites.net/index.html`
+- **API base URL:** `https://fakerestapi.azurewebsites.net/api/v1`
+- **Client:** `curl`, with Swagger UI / OpenAPI schema inspection
+
+#### Execution Log
+
+| Check | Requests | Observation | Finding |
+| --- | --- | --- | --- |
+| Authors detail consistency | `GET /Authors/606` sent 10 times | 4 responses were HTTP 200 and 6 were HTTP 404; successful bodies reported varying `idBook` values. | BUG-01 — repeated reads returned inconsistent resource availability and values. |
+| Authors collection consistency | `GET /Authors` sent 8 times | All responses were HTTP 200; collection sizes were 605, 611, 608, 589, 609, 613, 599, and 609. | Included in BUG-01 — collection size varied across reads. |
+| Activity date stability | `GET /Activities/1` sent 5 times | All responses were HTTP 200; each returned a different `dueDate`. | BUG-02 — `dueDate` changed without a write request. |
+| Book date stability | `GET /Books/1` sent 5 times | All responses were HTTP 200; each returned a different `publishDate`. | BUG-03 — `publishDate` changed without a write request. |
+| CoverPhoto URI format | Inspected the `CoverPhoto.url` OpenAPI schema and requested `GET /CoverPhotos/1`; passed the returned URL unchanged to `curl`. | The API returned HTTP 200 with a URL containing a raw space in its query value (`Book 1`); `curl` rejected that URL as malformed (error 3, HTTP 000; no follow-up request was made). | BUG-04 — the returned value did not satisfy the declared URI format for this strict client. |
+
+Four findings were recorded with individual reports and evidence logs. These are observations from the responses and client behavior; no server-side cause was established.
+
+See the [Day 42 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/README.md), [full execution log](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Execution_Logs/Day-42-FakeRest-Execution.log), [bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Defects_&_Bugreports/), and [evidence logs](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Evidence/).
+
+---
+
+### 🗓️ October 13, 2026 — Day 43: BookMyShow Manual Exploratory Testing (/Day-43-BookMyShow)
+
+#### Objective and Scope
+
+Review the public BookMyShow homepage and available location-routing evidence without signing in, entering personal or payment information, reserving seats, or purchasing tickets. Movie, cinema, showtime, and event flows were not explored.
+
+- **Target:** [BookMyShow India](https://in.bookmyshow.com/)
+- **Testing style:** Manual exploratory testing; one public read-only page request attempted
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Public landing page | Opened `https://in.bookmyshow.com/` in the integrated browser. | Page title: “Movie Tickets, Plays, Sports, Events & Cinemas nearby - BookMyShow.” | Homepage was accessible in the browser. |
+| Read-only page request | Attempted one GET of the public homepage using the page-fetch tool. | The tool returned HTTP 403. | Recorded as a fetch-tool response only; it does not establish that ordinary browser users receive HTTP 403 and is not treated as a site defect. |
+| Existing location-routing report | Reviewed the existing West Bengal routing report and its Network screenshot. | The screenshot shows a `200 OK` document request for `WestBengal /explore/home`, but does not show the final URL or prove a redirect to Delhi. | The reported routing issue was not independently reproduced during this session; its cause and current behavior remain unverified. |
+
+No direct navigation to the West Bengal route was made, and no new screenshot or recording was captured. No new bug or evidence was claimed. See the [Day 43 session report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-43-BookMyShow/README.md), [existing routing report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-43-BookMyShow/Defects_&_Bugreports/01-Location%20Selection%20Routing%20Failure.md), and [existing Network screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-43-BookMyShow/Evidence/Screenshots/01-Location%20Selection%20Routing%20Failure.png).
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
@@ -3954,17 +4002,28 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 │   │   └── Day-41-ParaBank-Exploratory-Testing...html
 │   └── README.md
 │
-└── Day-42-FakeRest/
+├── Day-42-FakeRest/
+│   ├── Defects_&_Bugreports/
+│   │   ├── 01-Authors-read-inconsistency.md
+│   │   ├── 02-Activity-due-date-changes-on-read.md
+│   │   ├── 03-Book-publish-date-changes-on-read.md
+│   │   └── 04-CoverPhoto-url-is-not-a-valid-uri.md
+│   ├── Execution_Logs/
+│   │   └── Day-42-FakeRest-Execution.log
+│   ├── Evidence/
+│   │   ├── 01-authors-read-inconsistency.log
+│   │   ├── 02-activity-due-date-changes-on-read.log
+│   │   ├── 03-book-publish-date-changes-on-read.log
+│   │   └── 04-cover-photo-invalid-uri.log
+│   └── README.md
+│
+└── Day-43-BookMyShow/
     ├── Defects_&_Bugreports/
-    │   ├── 01-Authors-read-inconsistency.md
-    │   ├── 02-Activity-due-date-changes-on-read.md
-    │   ├── 03-Book-publish-date-changes-on-read.md
-    │   └── 04-CoverPhoto-url-is-not-a-valid-uri.md
+    │   └── 01-Location Selection Routing Failure.md
     ├── Evidence/
-    │   ├── 01-authors-read-inconsistency.log
-    │   ├── 02-activity-due-date-changes-on-read.log
-    │   ├── 03-book-publish-date-changes-on-read.log
-    │   └── 04-cover-photo-invalid-uri.log
+    │   ├── 01-Location Selection Routing Failure.md
+    │   └── Screenshots/
+    │       └── 01-Location Selection Routing Failure.png
     └── README.md
 ```
 
@@ -4002,7 +4061,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 42 — FakeRESTApi exploratory API testing
+**Latest Milestone:** Day 43 — BookMyShow manual exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4028,15 +4087,11 @@ Day 40 continued Module 3 with exploratory testing of the Agile Travel flight-bo
 
 Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman, covering a positive login request, negative invalid-credential requests, and a request with unexpanded `{{username}}`/`{{password}}` path variables that Tomcat rejected with HTTP 400. The investigation also records credentials-in-URL-path as a separate security/design concern. See the [Day 41 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-41-ParaBank/README.md).
 
-### 🗓️ October 12, 2026 — Day 42: FakeRESTApi Exploratory API Testing (/Day-42-FakeRest)
-
-Explored the public Swagger UI and read-only API endpoints, documenting four defects: inconsistent Authors lookup/list data; changing Activity due dates and Book publication dates across repeated GETs; and a CoverPhoto URL that violates its OpenAPI URI format and is rejected by `curl`. See the [Day 42 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/README.md), [four bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Defects_&_Bugreports/), and [evidence logs](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-42-FakeRest/Evidence/).
-
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4046,6 +4101,6 @@ Explored the public Swagger UI and read-only API endpoints, documenting four def
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 42 — FakeRESTApi exploratory API testing
+**Latest Milestone:** Day 43 — BookMyShow manual exploratory testing
 
 **Next Milestone:** Module 3 — Buggy Sites / Exploratory Testing
