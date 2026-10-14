@@ -1588,6 +1588,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 11, 2026 | Day 41 | ParaBank (parabank.parasoft.com) | UI-to-API Exploratory Testing with Postman, Negative Login Testing & URI Path Credential Handling | ✅ Completed |
 | October 12, 2026 | Day 42 | FakeRESTApi (fakerestapi.azurewebsites.net) | Swagger/OpenAPI Exploration, API Read Consistency & Evidence-Based Bug Reporting | ✅ Completed |
 | October 13, 2026 | Day 43 | BookMyShow India (in.bookmyshow.com) | Homepage Review, Single Read-Only Request Attempt & Review of Existing Location-Routing Evidence | ✅ Completed |
+| October 14, 2026 | Day 44 | She's Charming WordPress Blog (shescharmingsite.wordpress.com) | Blog Archive and Article Review, Site Branding, Footer Content & Evidence-Based Bug Reporting | ✅ Completed |
 
 ---
 
@@ -3540,6 +3541,27 @@ No direct navigation to the West Bengal route was made, and no new screenshot or
 
 ---
 
+### 🗓️ October 14, 2026 — Day 44: She's Charming Blog Exploratory Testing (/Day-44-shescharmingsite)
+
+#### Objective and Scope
+
+Explore the public WordPress tag archive and linked article for recognizable site identity and relevant supporting content. Testing was read-only; no comments, contact forms, account actions, or external sign-ups were submitted.
+
+- **Target:** [She's Charming — Tag: expore](https://shescharmingsite.wordpress.com/tag/expore/)
+- **Testing style:** Manual exploratory testing; browser observation and read-only page-source verification
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Tag archive | Opened `https://shescharmingsite.wordpress.com/tag/expore/`. | The archive showed the post “4 Tour Companies for Twenty-Somethings” and the site header “Site Title”; browser title was “expore – Site Title.” | Page loaded; generic site-title placeholder recorded as BUG-01. |
+| Linked article | Opened the listed article and reviewed the article content and shared site chrome. | The article page retained the generic “Site Title” header. | Confirmed the branding issue is present on the archive and article pages. |
+| Footer About section | Reviewed the footer, captured a screenshot, and checked the page HTML using a read-only GET. | The footer is headed “About Sela” and includes promotional copy for the Sela WordPress theme; GET returned HTTP 200. | Unrelated theme copy recorded as BUG-02; see the [footer screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/02-Unrelated-Theme-Copy.jpeg). |
+
+Two low-severity, user-visible content/branding defects were documented. BUG-02 has a screenshot in addition to the browser observation and live HTML evidence. Incidental browser-reported 404 resources were not reported as defects because no user-visible failure was established. See the [Day 44 session report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Defects_&_Bugreports/01-Generic-Site-Title.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Defects_&_Bugreports/02-Unrelated-Theme-Copy.md), [BUG-02 screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/02-Unrelated-Theme-Copy.jpeg), and [live-page evidence note](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/01-Live-Page-Observations.md).
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
@@ -4017,13 +4039,22 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 │   │   └── 04-cover-photo-invalid-uri.log
 │   └── README.md
 │
-└── Day-43-BookMyShow/
+├── Day-43-BookMyShow/
+│   ├── Defects_&_Bugreports/
+│   │   └── 01-Location Selection Routing Failure.md
+│   ├── Evidence/
+│   │   ├── 01-Location Selection Routing Failure.md
+│   │   └── Screenshots/
+│   │       └── 01-Location Selection Routing Failure.png
+│   └── README.md
+
+└── Day-44-shescharmingsite/
     ├── Defects_&_Bugreports/
-    │   └── 01-Location Selection Routing Failure.md
+    │   ├── 01-Generic-Site-Title.md
+    │   └── 02-Unrelated-Theme-Copy.md
     ├── Evidence/
-    │   ├── 01-Location Selection Routing Failure.md
-    │   └── Screenshots/
-    │       └── 01-Location Selection Routing Failure.png
+    │   ├── 01-Live-Page-Observations.md
+    │   └── 02-Unrelated-Theme-Copy.jpeg
     └── README.md
 ```
 
@@ -4061,7 +4092,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 43 — BookMyShow manual exploratory testing
+**Latest Milestone:** Day 44 — She's Charming blog exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4087,11 +4118,13 @@ Day 40 continued Module 3 with exploratory testing of the Agile Travel flight-bo
 
 Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman, covering a positive login request, negative invalid-credential requests, and a request with unexpanded `{{username}}`/`{{password}}` path variables that Tomcat rejected with HTTP 400. The investigation also records credentials-in-URL-path as a separate security/design concern. See the [Day 41 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-41-ParaBank/README.md).
 
+Day 44 continued Module 3 with exploratory testing of the She's Charming WordPress archive and linked article. Two low-severity defects were recorded: the generic “Site Title” placeholder in the site header/page title and unrelated Sela theme promotional copy in the footer. Both findings were cross-checked against the live page HTML, and BUG-02 includes a footer screenshot. See the [Day 44 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/README.md), [bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Defects_&_Bugreports/), [BUG-02 screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/02-Unrelated-Theme-Copy.jpeg), and [evidence note](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/01-Live-Page-Observations.md).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4101,6 +4134,6 @@ Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 43 — BookMyShow manual exploratory testing
+**Latest Milestone:** Day 44 — She's Charming blog exploratory testing
 
 **Next Milestone:** Module 3 — Buggy Sites / Exploratory Testing
