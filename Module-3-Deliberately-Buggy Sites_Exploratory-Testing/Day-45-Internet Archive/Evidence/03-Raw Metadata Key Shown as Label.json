@@ -1,0 +1,18 @@
+{
+  "testDate": "2026-10-15",
+  "url": "https://archive.org/details/Apollo11Footage",
+  "viewportCssPixels": {
+    "width": 390,
+    "height": 844
+  },
+  "method": "Inspected the rendered accessibility snapshot and mobile viewport.",
+  "observedMetadataLabels": [
+    "Addeddate",
+    "Ia_orig__runtime",
+    "Identifier",
+    "Run time",
+    "Sound"
+  ],
+  "observation": "The literal metadata key Ia_orig__runtime is displayed as a field label and wraps across lines at the tested viewport.",
+  "expected": "Present the field with a human-readable label or omit it from the public-facing metadata list."
+}

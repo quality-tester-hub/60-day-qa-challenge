@@ -1589,6 +1589,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 12, 2026 | Day 42 | FakeRESTApi (fakerestapi.azurewebsites.net) | Swagger/OpenAPI Exploration, API Read Consistency & Evidence-Based Bug Reporting | ✅ Completed |
 | October 13, 2026 | Day 43 | BookMyShow India (in.bookmyshow.com) | Homepage Review, Single Read-Only Request Attempt & Review of Existing Location-Routing Evidence | ✅ Completed |
 | October 14, 2026 | Day 44 | She's Charming WordPress Blog (shescharmingsite.wordpress.com) | Blog Archive and Article Review, Site Branding, Footer Content & Evidence-Based Bug Reporting | ✅ Completed |
+| October 15, 2026 | Day 45 | Internet Archive (archive.org) | Performance Trace Review, Item-Page Heading Semantics, Mobile Metadata Presentation & Evidence-Based Bug Reporting | ✅ Completed |
 
 ---
 
@@ -3562,12 +3563,41 @@ Two low-severity, user-visible content/branding defects were documented. BUG-02 
 
 ---
 
+### 🗓️ October 15, 2026 — Day 45: Internet Archive Exploratory Testing
+
+#### Objective and Scope
+
+Review the Internet Archive Apollo 11 item details page for performance, heading semantics, and readable metadata presentation. Heading and metadata observations were collected at a 390 × 844 CSS-pixel viewport. A separate DevTools performance trace used an emulated iPhone 16 with 4× CPU throttling. No account or transaction action was performed.
+
+- **Target:** [Internet Archive — Apollo 11 footage](https://archive.org/details/Apollo11Footage)
+- **Testing style:** Manual exploratory testing with DevTools performance-trace and rendered-page inspection
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Performance capture | Recorded a DevTools trace with an emulated iPhone 16 and 4× CPU throttling. | Trace metadata identifies `https://archive.org/` and its main stylesheet, but not the Apollo 11 item-details route or a specific heavy-resource interaction. | Preserved for BUG-01; the trace does not independently confirm the reported freeze. |
+| Item-page heading structure | Enumerated `H1` elements in the rendered Apollo 11 item page and its open shadow roots. | Seven `H1` headings were exposed: `Apollo 11 footage`, `Share or Embed This Item`, `Flag this item for`, a second `Apollo 11 footage`, `DOWNLOAD OPTIONS`, `IN COLLECTIONS`, and `SIMILAR ITEMS (based on metadata) play Play All`. | BUG-02 confirmed; the title is duplicated and section labels use the top heading level. |
+| Additional metadata | Inspected metadata labels at 390 × 844 CSS pixels. | The raw key `Ia_orig__runtime` is displayed literally and wraps across lines. | BUG-03 confirmed. |
+
+#### Findings
+
+| ID | Finding | Severity / priority | Assessment |
+| --- | --- | --- | --- |
+| BUG-01 | High latency and UI unresponsiveness during heavy resource loading. | Medium / P2 | Reported, but the supplied trace is for the archive root page and does not document the specific interaction or a measured freeze. A targeted reproduction and baseline comparison are still needed. |
+| BUG-02 | Seven top-level headings on the item details page rather than one item-title `H1`. | Low / P3 | Confirmed in the rendered page at the tested viewport. |
+| BUG-03 | Raw metadata key `Ia_orig__runtime` shown as a label and wrapping at mobile width. | Low / P3 | Confirmed in the rendered page at the tested viewport. |
+
+The expected heading structure is one `H1` for the item title followed by lower-level section headings. The metadata field should use a human-readable label (for example, “Original runtime”) or be omitted from the public-facing list. The performance concern remains recorded, but should not be treated as a confirmed UI freeze until a trace captures the affected item-page action and its timing against a baseline.
+
+See the [Day 45 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/01-High%20Latency%20and%20UI%20Freeze.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/02-Item%20Details%20Has%20Multiple%20H1%20Headings.md), [BUG-03 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/03-Raw%20Metadata%20Key%20Shown%20as%20Label.md), and the [Day 45 evidence folder](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Evidence/).
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
 
-```text
-Module-1-UI-Automation/
 
 ├── day-01-the-internet/
 │   ├── Defects_&_Bugreports/
@@ -4048,13 +4078,23 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 │   │       └── 01-Location Selection Routing Failure.png
 │   └── README.md
 
-└── Day-44-shescharmingsite/
+├── Day-44-shescharmingsite/
     ├── Defects_&_Bugreports/
     │   ├── 01-Generic-Site-Title.md
     │   └── 02-Unrelated-Theme-Copy.md
     ├── Evidence/
     │   ├── 01-Live-Page-Observations.md
     │   └── 02-Unrelated-Theme-Copy.jpeg
+    └── README.md
+└── Day-45-Internet Archive/
+    ├── Defects_&_Bugreports/
+    │   ├── 01-High Latency and UI Freeze.md
+    │   ├── 02-Item Details Has Multiple H1 Headings.md
+    │   └── 03-Raw Metadata Key Shown as Label.md
+    ├── Evidence/
+    │   ├── 01-High Latency and UI Freeze.json
+    │   ├── 02-Item Details Has Multiple H1 Headings.json
+    │   └── 03-Raw Metadata Key Shown as Label.json
     └── README.md
 ```
 
@@ -4092,7 +4132,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 44 — She's Charming blog exploratory testing
+**Latest Milestone:** Day 45 — Internet Archive exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4120,11 +4160,13 @@ Day 41 continued Module 3 with ParaBank UI-to-API exploratory testing in Postman
 
 Day 44 continued Module 3 with exploratory testing of the She's Charming WordPress archive and linked article. Two low-severity defects were recorded: the generic “Site Title” placeholder in the site header/page title and unrelated Sela theme promotional copy in the footer. Both findings were cross-checked against the live page HTML, and BUG-02 includes a footer screenshot. See the [Day 44 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/README.md), [bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Defects_&_Bugreports/), [BUG-02 screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/02-Unrelated-Theme-Copy.jpeg), and [evidence note](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-44-shescharmingsite/Evidence/01-Live-Page-Observations.md).
 
+Day 45 continued Module 3 with exploratory testing of the Internet Archive Apollo 11 item details page. Two low-severity findings were confirmed: seven exposed `H1` headings, including a duplicated item title, and the raw metadata label `Ia_orig__runtime` wrapping at a 390 × 844 CSS-pixel viewport. A separate DevTools performance trace was captured with an emulated iPhone 16 and 4× CPU throttling; it references the archive root page, so it does not independently confirm the reported heavy-load UI freeze and needs a targeted reproduction. See the [Day 45 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/01-High%20Latency%20and%20UI%20Freeze.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/02-Item%20Details%20Has%20Multiple%20H1%20Headings.md), [BUG-03 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/03-Raw%20Metadata%20Key%20Shown%20as%20Label.md), and the [Day 45 evidence folder](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Evidence/).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4134,6 +4176,6 @@ Day 44 continued Module 3 with exploratory testing of the She's Charming WordPre
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 44 — She's Charming blog exploratory testing
+**Latest Milestone:** Day 45 — Internet Archive exploratory testing
 
-**Next Milestone:** Module 3 — Buggy Sites / Exploratory Testing
+**Next Milestone:** Day 46 — Module 3 exploratory testing

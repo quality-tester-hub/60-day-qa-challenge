@@ -1,0 +1,20 @@
+{
+  "testDate": "2026-10-15",
+  "url": "https://archive.org/details/Apollo11Footage",
+  "viewportCssPixels": {
+    "width": 390,
+    "height": 844
+  },
+  "method": "Enumerated H1 elements in the rendered page and its open shadow roots.",
+  "observedH1Count": 7,
+  "observedH1Text": [
+    "Apollo 11 footage",
+    "Share or Embed This Item",
+    "Flag this item for",
+    "Apollo 11 footage",
+    "DOWNLOAD OPTIONS",
+    "IN COLLECTIONS",
+    "SIMILAR ITEMS (based on metadata) play Play All"
+  ],
+  "expected": "One H1 for the item title, followed by section headings at lower levels."
+}
