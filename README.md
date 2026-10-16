@@ -1590,6 +1590,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 13, 2026 | Day 43 | BookMyShow India (in.bookmyshow.com) | Homepage Review, Single Read-Only Request Attempt & Review of Existing Location-Routing Evidence | ✅ Completed |
 | October 14, 2026 | Day 44 | She's Charming WordPress Blog (shescharmingsite.wordpress.com) | Blog Archive and Article Review, Site Branding, Footer Content & Evidence-Based Bug Reporting | ✅ Completed |
 | October 15, 2026 | Day 45 | Internet Archive (archive.org) | Performance Trace Review, Item-Page Heading Semantics, Mobile Metadata Presentation & Evidence-Based Bug Reporting | ✅ Completed |
+| October 16, 2026 | Day 46 | Kaggle (kaggle.com) | Public Competitions Page, Responsive UI Inspection at Mobile Widths & Screenshot-Based Bug Reporting | ✅ Completed |
 
 ---
 
@@ -3594,6 +3595,31 @@ See the [Day 45 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 
 ---
 
+### 🗓️ October 16, 2026 — Day 46: Kaggle Responsive UI Exploratory Testing
+
+#### Objective and Scope
+
+Inspect the public Kaggle Competitions page for user-visible responsive UI issues at narrow mobile widths. Testing was logged out and read-only; no account, competition entry, search submission, or other-user data was involved.
+
+- **Target:** [Kaggle Competitions](https://www.kaggle.com/competitions)
+- **Testing style:** Manual browser inspection at 320 px and 390 px viewport widths
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Responsive search field | Viewed the search control beside **Filters** at 320 px and 390 px widths. | In the 320 × 720 screenshot, the input is approximately 126 px wide and the “Search competitions” placeholder measures approximately 136 px, so the visible hint is clipped. At 390 px, the input is approximately 186 px wide and the placeholder fits. | BUG-01 reproduced at 320 px; screenshot captured. |
+
+#### Finding
+
+| ID | Finding | Severity / priority | Assessment |
+| --- | --- | --- | --- |
+| BUG-01 | “Search competitions” placeholder is clipped without an ellipsis at a 320 px viewport. | Low / P3 | Reproduced; the search field remains identifiable. Search behavior was not tested. |
+
+See the [Day 46 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Defects_&_Bugreports/01-Search-Placeholder-Clipped-on-Mobile.md), and [screenshot evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Evidence/01-Search-Placeholder-Clipped-on-Mobile.png).
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
@@ -4086,7 +4112,7 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     │   ├── 01-Live-Page-Observations.md
     │   └── 02-Unrelated-Theme-Copy.jpeg
     └── README.md
-└── Day-45-Internet Archive/
+├── Day-45-Internet Archive/
     ├── Defects_&_Bugreports/
     │   ├── 01-High Latency and UI Freeze.md
     │   ├── 02-Item Details Has Multiple H1 Headings.md
@@ -4095,6 +4121,13 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     │   ├── 01-High Latency and UI Freeze.json
     │   ├── 02-Item Details Has Multiple H1 Headings.json
     │   └── 03-Raw Metadata Key Shown as Label.json
+    └── README.md
+└── Day-46-kaggle/
+    ├── Defects_&_Bugreports/
+    │   └── 01-Search-Placeholder-Clipped-on-Mobile.md
+    ├── Evidence/
+    │   ├── 01-Search-Placeholder-Clipped-on-Mobile.md
+    │   └── 01-Search-Placeholder-Clipped-on-Mobile.png
     └── README.md
 ```
 
@@ -4132,7 +4165,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 45 — Internet Archive exploratory testing
+**Latest Milestone:** Day 46 — Kaggle responsive UI exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4162,11 +4195,13 @@ Day 44 continued Module 3 with exploratory testing of the She's Charming WordPre
 
 Day 45 continued Module 3 with exploratory testing of the Internet Archive Apollo 11 item details page. Two low-severity findings were confirmed: seven exposed `H1` headings, including a duplicated item title, and the raw metadata label `Ia_orig__runtime` wrapping at a 390 × 844 CSS-pixel viewport. A separate DevTools performance trace was captured with an emulated iPhone 16 and 4× CPU throttling; it references the archive root page, so it does not independently confirm the reported heavy-load UI freeze and needs a targeted reproduction. See the [Day 45 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/01-High%20Latency%20and%20UI%20Freeze.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/02-Item%20Details%20Has%20Multiple%20H1%20Headings.md), [BUG-03 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Defects_&_Bugreports/03-Raw%20Metadata%20Key%20Shown%20as%20Label.md), and the [Day 45 evidence folder](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-45-Internet%20Archive/Evidence/).
 
+Day 46 continued Module 3 with a logged-out, read-only responsive review of Kaggle's public Competitions page. The “Search competitions” placeholder is clipped without an ellipsis at a 320 px viewport; it fits at 390 px. The low-severity finding has a screenshot captured at the narrow viewport. See the [Day 46 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Defects_&_Bugreports/01-Search-Placeholder-Clipped-on-Mobile.md), and [screenshot evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Evidence/01-Search-Placeholder-Clipped-on-Mobile.png).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4176,6 +4211,6 @@ Day 45 continued Module 3 with exploratory testing of the Internet Archive Apoll
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 45 — Internet Archive exploratory testing
+**Latest Milestone:** Day 46 — Kaggle responsive UI exploratory testing
 
-**Next Milestone:** Day 46 — Module 3 exploratory testing
+**Next Milestone:** Day 47 — Module 3 exploratory testing
