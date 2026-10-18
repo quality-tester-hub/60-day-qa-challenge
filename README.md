@@ -1591,6 +1591,8 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 14, 2026 | Day 44 | She's Charming WordPress Blog (shescharmingsite.wordpress.com) | Blog Archive and Article Review, Site Branding, Footer Content & Evidence-Based Bug Reporting | ✅ Completed |
 | October 15, 2026 | Day 45 | Internet Archive (archive.org) | Performance Trace Review, Item-Page Heading Semantics, Mobile Metadata Presentation & Evidence-Based Bug Reporting | ✅ Completed |
 | October 16, 2026 | Day 46 | Kaggle (kaggle.com) | Public Competitions Page, Responsive UI Inspection at Mobile Widths & Screenshot-Based Bug Reporting | ✅ Completed |
+| October 17, 2026 | Day 47 | ToneLark (tonelark.com) | Homepage Subtitle Timing, Responsive Navigation & Accessibility Exploratory Testing | ✅ Completed |
+| October 18, 2026 | Day 48 | Pixabay (pixabay.com) | Public Search, API/Network Response Checks, Responsive Search Field & Public Creator Profile | ✅ Completed |
 
 ---
 
@@ -3620,6 +3622,62 @@ See the [Day 46 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 
 ---
 
+### 🗓️ October 17, 2026 — Day 47: ToneLark Homepage Exploratory Testing
+
+#### Objective and Scope
+
+Inspect the public ToneLark homepage's sample transcript timing and responsive navigation. Testing was logged out and read-only; no account was created and no media was uploaded.
+
+- **Target:** [ToneLark](https://tonelark.com/)
+- **Testing style:** Chromium browser inspection at desktop and mobile-width viewports
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Demo subtitle timing | Compared consecutive cue time ranges in the homepage transcript. | Cue 24 starts 715 ms before cue 23 ends; cue 36 starts 185 ms before cue 35 ends. | BUG-01 reproduced; screenshots and a video were captured. |
+| Expanded navigation | Opened the header menu at 720 × 780 px and inspected its accessible name and expanded state. | The menu is visible and `aria-expanded` is true, but the accessible name remains “Open menu.” | BUG-02 reproduced; screenshot and video captured. |
+
+#### Findings
+
+| ID | Finding | Severity / priority |
+| --- | --- | --- |
+| BUG-01 | Two consecutive cue pairs in the homepage demo have overlapping time ranges. | Low / P3 |
+| BUG-02 | The expanded navigation button retains the accessible name “Open menu.” | Low / P3 |
+
+See the [Day 47 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-47-tonelark/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-47-tonelark/Defects_&_Bugreports/01-Overlapping-Demo-Subtitle-Timecodes.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-47-tonelark/Defects_&_Bugreports/02-Expanded-Menu-Accessible-Name.md), and the [Day 47 evidence folder](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-47-tonelark/Evidence/).
+
+---
+
+### 🗓️ October 18, 2026 — Day 48: Pixabay Search and Profile Exploratory Testing
+
+#### Objective and Scope
+
+Test a normal logged-out search, inspect its first-party API/network responses, and open a public creator profile linked from the results.
+
+- **Target:** [Pixabay](https://pixabay.com/)
+- **Testing style:** Chromium browser and Network inspection; no account used
+
+The requested URL modification to obtain admin authentication was not attempted because it would be an unauthorized privilege-escalation attempt. No private profile or admin functionality was accessed.
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Public search/API | Searched for `mountains` and inspected the document, autocomplete, bootstrap, and preflight requests. | Search document and first-party fetch/XHR requests returned HTTP 200; no API errors or failed requests were observed. Search results loaded. | Search succeeded; no API defect found. |
+| Responsive search field | Inspected the results-page query field at 807 px and 1024 px viewport widths. | At 807 px, the 43 px input clips the 90 px `mountains` value; at 1024 px the 244 px field displays the query. | BUG-01 reproduced at 807 px. |
+| Public profile | Opened the public creator profile linked from a search result. | Profile content loaded; 12 fetch and 3 XHR responses returned HTTP 200 with no API errors. | Public profile loaded successfully. |
+
+#### Finding
+
+| ID | Finding | Severity / priority |
+| --- | --- | --- |
+| BUG-01 | The search query is clipped in the results-page header at an 807 px viewport. | Low / P3 |
+
+See the [Day 48 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Defects_&_Bugreports/01-Search-Query-Clipped-at-Tablet-Width.md), [search screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/01-Pixabay-Mountains-Search.png), [public profile screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/02-Public-Creator-Profile.png), and [network observations](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/01-Pixabay-Network-Observations.md).
+
+---
+
 # 📁 Project Structure
 
 ## Module-1-UI-Automation/
@@ -4122,12 +4180,31 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     │   ├── 02-Item Details Has Multiple H1 Headings.json
     │   └── 03-Raw Metadata Key Shown as Label.json
     └── README.md
-└── Day-46-kaggle/
+├── Day-46-kaggle/
     ├── Defects_&_Bugreports/
     │   └── 01-Search-Placeholder-Clipped-on-Mobile.md
     ├── Evidence/
     │   ├── 01-Search-Placeholder-Clipped-on-Mobile.md
     │   └── 01-Search-Placeholder-Clipped-on-Mobile.png
+    └── README.md
+└── Day-47-tonelark/
+    ├── Defects_&_Bugreports/
+    │   ├── 01-Overlapping-Demo-Subtitle-Timecodes.md
+    │   └── 02-Expanded-Menu-Accessible-Name.md
+    ├── Evidence/
+    │   ├── 01-Overlapping-Demo-Subtitle-Timecodes.png
+    │   ├── 01-Overlapping-Demo-Subtitle-Timecodes.webm
+    │   ├── 02-Expanded-Menu-Interaction.webm
+    │   ├── 02-Expanded-Menu-Name-Mismatch.png
+    │   └── 03-Overlapping-Demo-Subtitle-Cues-35-36.png
+    └── README.md
+└── day-48-pixabay/
+    ├── Defects_&_Bugreports/
+    │   └── 01-Search-Query-Clipped-at-Tablet-Width.md
+    ├── Evidence/
+    │   ├── 01-Pixabay-Mountains-Search.png
+    │   ├── 01-Pixabay-Network-Observations.md
+    │   └── 02-Public-Creator-Profile.png
     └── README.md
 ```
 
@@ -4165,7 +4242,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 46 — Kaggle responsive UI exploratory testing
+**Latest Milestone:** Day 48 — Pixabay search and public profile exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4201,7 +4278,7 @@ Day 46 continued Module 3 with a logged-out, read-only responsive review of Kagg
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4211,6 +4288,6 @@ Day 46 continued Module 3 with a logged-out, read-only responsive review of Kagg
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 46 — Kaggle responsive UI exploratory testing
+**Latest Milestone:** Day 48 Pixabay — Module 3
 
-**Next Milestone:** Day 47 — Module 3 exploratory testing
+**Next Milestone:** Module 3 exploratory testing day 49
