@@ -1593,6 +1593,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 16, 2026 | Day 46 | Kaggle (kaggle.com) | Public Competitions Page, Responsive UI Inspection at Mobile Widths & Screenshot-Based Bug Reporting | ✅ Completed |
 | October 17, 2026 | Day 47 | ToneLark (tonelark.com) | Homepage Subtitle Timing, Responsive Navigation & Accessibility Exploratory Testing | ✅ Completed |
 | October 18, 2026 | Day 48 | Pixabay (pixabay.com) | Public Search, API/Network Response Checks, Responsive Search Field & Public Creator Profile | ✅ Completed |
+| October 19, 2026 | Day 49 | YTUltra (ytultra.com) | Analyzer Responsive Layout, URL Input Labeling & FAQ Disclosure Accessibility | ✅ Completed |
 
 ---
 
@@ -3676,6 +3677,35 @@ The requested URL modification to obtain admin authentication was not attempted 
 
 See the [Day 48 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Defects_&_Bugreports/01-Search-Query-Clipped-at-Tablet-Width.md), [search screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/01-Pixabay-Mountains-Search.png), [public profile screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/02-Public-Creator-Profile.png), and [network observations](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-48-pixabay/Evidence/01-Pixabay-Network-Observations.md).
 
+### 🗓️ October 19, 2026 — Day 49: YTUltra Analyzer Exploratory Testing
+
+#### Objective and Scope
+
+Reviewed the public YouTube Video Analyzer page while logged out. Exploration focused on responsive header behavior, the video URL input's labeling, and accessible state communication for the FAQ disclosure. No account was created and no video was submitted for analysis.
+
+- **Target:** [YTUltra YouTube Video Analyzer](https://www.ytultra.com/en/youtube-video-analyzer/)
+- **Testing style:** Chromium browser, responsive viewport inspection, and accessible DOM state checks
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Responsive header | Inspected the page at widths from 375 px to 1024 px. | At 768, 800, and 820 px, the document expands to 831, 833, and 834 px respectively; the “Get Started” button extends beyond the viewport. No horizontal overflow was observed at 767 or 900 px. | BUG-01 reproduced at 768, 800, and 820 px. |
+| Analyzer URL field | Inspected the URL input's associated labels and naming attributes. | The input has a placeholder, but no associated `<label>`, `aria-label`, or `title`; the placeholder is the only field prompt. | BUG-02 reproduced. |
+| FAQ disclosure | Opened “What exactly does the Video Analyzer look at?” and inspected the expanded control. | The answer becomes visible, but the button has no `aria-expanded` or `aria-controls` attribute. | BUG-03 reproduced. |
+
+#### Findings
+
+| ID | Finding | Severity / priority |
+| --- | --- | --- |
+| BUG-01 | The navigation/header overflows horizontally at the tested tablet widths of 768, 800, and 820 px. | Low / P3 |
+| BUG-02 | The analyzer URL input has no persistent explicit label. | Low / P3 |
+| BUG-03 | FAQ disclosure buttons do not expose their expanded state programmatically. | Low / P3 |
+
+See the [Day 49 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/01-Responsive-Header-Overflows-at-Tablet-Width.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/02-Analyzer-URL-Input-Lacks-Programmatic-Label.md), [BUG-03 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/03-FAQ-Disclosure-State-Not-Exposed.md), the [browser evidence log](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/01-YTUltra-Exploratory-Observations.md), and the [tablet-width screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/02-Responsive-Header-Overflow-800px.png).
+
+**Module 3 wrap-up:** Tomorrow, October 20, 2026 (Day 50), is the final day planned for Module 3. The goal is to wrap up the module and its main README documentation.
+
 ---
 
 # 📁 Project Structure
@@ -4198,13 +4228,22 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     │   ├── 02-Expanded-Menu-Name-Mismatch.png
     │   └── 03-Overlapping-Demo-Subtitle-Cues-35-36.png
     └── README.md
-└── day-48-pixabay/
+├── day-48-pixabay/
     ├── Defects_&_Bugreports/
     │   └── 01-Search-Query-Clipped-at-Tablet-Width.md
     ├── Evidence/
     │   ├── 01-Pixabay-Mountains-Search.png
     │   ├── 01-Pixabay-Network-Observations.md
     │   └── 02-Public-Creator-Profile.png
+    └── README.md
+└── day-49-ytultra/
+    ├── Defects_&_Bugreports/
+    │   ├── 01-Responsive-Header-Overflows-at-Tablet-Width.md
+    │   ├── 02-Analyzer-URL-Input-Lacks-Programmatic-Label.md
+    │   └── 03-FAQ-Disclosure-State-Not-Exposed.md
+    ├── Evidence/
+    │   ├── 01-YTUltra-Exploratory-Observations.md
+    │   └── 02-Responsive-Header-Overflow-800px.png
     └── README.md
 ```
 
@@ -4242,7 +4281,7 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 **Status:** 🔄 In Progress
 
-**Latest Milestone:** Day 48 — Pixabay search and public profile exploratory testing
+**Latest Milestone:** Day 49 — YTUltra analyzer exploratory testing
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4274,11 +4313,13 @@ Day 45 continued Module 3 with exploratory testing of the Internet Archive Apoll
 
 Day 46 continued Module 3 with a logged-out, read-only responsive review of Kaggle's public Competitions page. The “Search competitions” placeholder is clipped without an ellipsis at a 320 px viewport; it fits at 390 px. The low-severity finding has a screenshot captured at the narrow viewport. See the [Day 46 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Defects_&_Bugreports/01-Search-Placeholder-Clipped-on-Mobile.md), and [screenshot evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-46-kaggle/Evidence/01-Search-Placeholder-Clipped-on-Mobile.png).
 
+Day 49 continued Module 3 with logged-out exploratory testing of YTUltra's public YouTube Video Analyzer page. Three low-severity findings were reproduced: horizontal navigation overflow at the tested 768, 800, and 820 px widths, a URL input without a persistent explicit label, and FAQ disclosures that omit their expanded state. See the [Day 49 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/README.md), the [three defect reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/), and the [browser observation evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/01-YTUltra-Exploratory-Observations.md).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49
 
 **Completed Modules:** Module 1, Module 2
 
@@ -4288,6 +4329,6 @@ Day 46 continued Module 3 with a logged-out, read-only responsive review of Kagg
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 48 Pixabay — Module 3
+**Latest Milestone:** Day 49 YTUltra analyzer — Module 3
 
-**Next Milestone:** Module 3 exploratory testing day 49
+**Next Milestone:** October 20, 2026 — Day 50, final Module 3 wrap-up and main README update
