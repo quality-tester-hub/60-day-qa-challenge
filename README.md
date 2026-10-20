@@ -1594,6 +1594,7 @@ Welcome to Module 3 - Deliberately Buggy Sites. This section tracks charter-base
 | October 17, 2026 | Day 47 | ToneLark (tonelark.com) | Homepage Subtitle Timing, Responsive Navigation & Accessibility Exploratory Testing | ✅ Completed |
 | October 18, 2026 | Day 48 | Pixabay (pixabay.com) | Public Search, API/Network Response Checks, Responsive Search Field & Public Creator Profile | ✅ Completed |
 | October 19, 2026 | Day 49 | YTUltra (ytultra.com) | Analyzer Responsive Layout, URL Input Labeling & FAQ Disclosure Accessibility | ✅ Completed |
+| October 20, 2026 | Day 50 | CrazyGames (crazygames.com) | Embedded Game Exploration, Mobile Header Behavior & Icon-Control Accessibility | ✅ Completed |
 
 ---
 
@@ -3704,7 +3705,36 @@ Reviewed the public YouTube Video Analyzer page while logged out. Exploration fo
 
 See the [Day 49 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/01-Responsive-Header-Overflows-at-Tablet-Width.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/02-Analyzer-URL-Input-Lacks-Programmatic-Label.md), [BUG-03 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/03-FAQ-Disclosure-State-Not-Exposed.md), the [browser evidence log](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/01-YTUltra-Exploratory-Observations.md), and the [tablet-width screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/02-Responsive-Header-Overflow-800px.png).
 
-**Module 3 wrap-up:** Tomorrow, October 20, 2026 (Day 50), is the final day planned for Module 3. The goal is to wrap up the module and its main README documentation.
+### 🗓️ October 20, 2026 — Day 50: CrazyGames Exploratory Testing
+
+#### Objective and Scope
+
+Explore the public CrazyGames portal, search for games, inspect the global header at mobile and desktop widths, and enter game pages for Bloxd.io and Moto X3M. Testing was logged out; no account or purchase was used.
+
+- **Target:** [CrazyGames](https://www.crazygames.com/)
+- **Games explored:** [Bloxd.io](https://www.crazygames.com/game/bloxdhop-io) and [Moto X3M](https://www.crazygames.com/game/moto-x3m)
+- **Testing style:** Chromium browser, responsive viewport inspection, accessible DOM checks, and game-entry exploration
+
+#### Execution Log
+
+| Check | Action | Observation | Result |
+| --- | --- | --- | --- |
+| Mobile global header | Inspected the Bloxd.io page at 375 × 812 CSS px. | The document scroll width was 673 px. The header's right section ended at x=396 px, and the Log in button extended from x=328 to x=396 px, clipping 21 px beyond the viewport. | BUG-01 reproduced; screenshot captured. |
+| Header control names | Inspected the Friends and My games buttons at 1200 × 900 CSS px. | Neither button has an `aria-label` or `title`; the text labels have computed `display: none`, and the icon elements have `aria-hidden="true"`. | BUG-02 reproduced. |
+| Game search | Searched for `bloxd.io` using the homepage search overlay. | A Bloxd.io suggestion linked to its game page. | Search and navigation succeeded. |
+| Bloxd.io entry | Tried “Continue as guest” on the game's welcome-back prompt. | The prompt remained visible; gameplay could not be confirmed in this browser run. | Inconclusive; not filed as a defect. |
+| Moto X3M entry | Waited for the embedded game and tried a click and Space key press. | The embedded game canvas remained on “LOADING...” and did not reach a playable state during this run. | Inconclusive; not filed as a defect. |
+
+#### Findings
+
+| ID | Finding | Severity / priority |
+| --- | --- | --- |
+| BUG-01 | The global header clips its Log in action at a 375 px viewport. | Low / P3 |
+| BUG-02 | The Friends and My games icon buttons lack accessible names. | Medium / P2 |
+
+See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/README.md), [BUG-01 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Defects_&_Bugreports/01-Mobile-Header-Overflows-Viewport.md), [BUG-02 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Defects_&_Bugreports/02-Header-Icon-Buttons-Lack-Accessible-Names.md), the [browser observation log](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Evidence/01-CrazyGames-Exploratory-Observations.md), and the [mobile header screenshot](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Evidence/02-Mobile-Header-Overflow-375px.png).
+
+**Module 3 wrap-up:** Completed on October 20, 2026 (Day 50). CrazyGames' two reproducible findings are documented above, and the main project tree and portfolio status have been updated.
 
 ---
 
@@ -4236,7 +4266,7 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     │   ├── 01-Pixabay-Network-Observations.md
     │   └── 02-Public-Creator-Profile.png
     └── README.md
-└── day-49-ytultra/
+├── day-49-ytultra/
     ├── Defects_&_Bugreports/
     │   ├── 01-Responsive-Header-Overflows-at-Tablet-Width.md
     │   ├── 02-Analyzer-URL-Input-Lacks-Programmatic-Label.md
@@ -4244,6 +4274,14 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     ├── Evidence/
     │   ├── 01-YTUltra-Exploratory-Observations.md
     │   └── 02-Responsive-Header-Overflow-800px.png
+    └── README.md
+└── Day-50-crazygames/
+    ├── Defects_&_Bugreports/
+    │   ├── 01-Mobile-Header-Overflows-Viewport.md
+    │   └── 02-Header-Icon-Buttons-Lack-Accessible-Names.md
+    ├── Evidence/
+    │   ├── 01-CrazyGames-Exploratory-Observations.md
+    │   └── 02-Mobile-Header-Overflow-375px.png
     └── README.md
 ```
 
@@ -4279,9 +4317,9 @@ Day 30 closed the DevTools track and Module 2 through Random User Console fetch 
 
 ## Module 3 — Deliberately Buggy Sites / Exploratory Testing
 
-**Status:** 🔄 In Progress
+**Status:** ✅ Complete
 
-**Latest Milestone:** Day 49 — YTUltra analyzer exploratory testing
+**Latest Milestone:** Day 50 — CrazyGames exploratory testing and Module 3 wrap-up
 
 **Primary Approach:** Charter-based and Session-Based Test Management (SBTM) exploratory testing
 
@@ -4315,13 +4353,15 @@ Day 46 continued Module 3 with a logged-out, read-only responsive review of Kagg
 
 Day 49 continued Module 3 with logged-out exploratory testing of YTUltra's public YouTube Video Analyzer page. Three low-severity findings were reproduced: horizontal navigation overflow at the tested 768, 800, and 820 px widths, a URL input without a persistent explicit label, and FAQ disclosures that omit their expanded state. See the [Day 49 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/README.md), the [three defect reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Defects_&_Bugreports/), and the [browser observation evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/day-49-ytultra/Evidence/01-YTUltra-Exploratory-Observations.md).
 
+Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible issues were documented: the global header clips its Log in action at a 375 px viewport, and the Friends and My games icon buttons lack accessible names. Bloxd.io and Moto X3M game entry were explored; Bloxd.io remained on its welcome-back prompt and Moto X3M remained on a loading screen, so neither inconclusive embedded-game observation was reported as a defect. See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/README.md), [bug reports](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Defects_&_Bugreports/), and [browser observation evidence](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/Day-50-crazygames/Evidence/01-CrazyGames-Exploratory-Observations.md).
+
 ---
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50
 
-**Completed Modules:** Module 1, Module 2
+**Completed Modules:** Module 1, Module 2, Module 3
 
 **Completed API Track:** Module 2 — API Testing
 
@@ -4329,6 +4369,14 @@ Day 49 continued Module 3 with logged-out exploratory testing of YTUltra's publi
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 49 YTUltra analyzer — Module 3
+**Latest Milestone:** Day 50 CrazyGames — Module 3 complete
 
-**Next Milestone:** October 20, 2026 — Day 50, final Module 3 wrap-up and main README update
+**Module 3 Status:** ✅ Complete — Days 31–50
+
+## Module 3 Completion Summary
+
+Module 3 — Deliberately Buggy Sites / Exploratory Testing — concluded on **October 20, 2026 (Day 50)**. The completed module spans Days 31–50 and used exploratory charters and session-based testing across practice sites, public websites, web applications, and game portals. The work included functional and state validation, responsive behavior, accessibility, browser DevTools/network inspection, and evidence-based bug reporting.
+
+The final CrazyGames session added two confirmed, documented findings: mobile header overflow at 375 px (Low / P3) and missing accessible names on the Friends and My games controls (Medium / P2). Game-entry observations that could not be distinguished from browser/runtime limitations were explicitly left inconclusive rather than filed as bugs. The Day 50 README, individual reports, observation log, screenshot evidence, and project-tree entry are all linked above.
+
+**Final status:** ✅ Module 3 complete. The portfolio's next work can begin outside the planned Day 31–50 Module 3 sequence.
