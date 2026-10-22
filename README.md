@@ -4285,6 +4285,25 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
     └── README.md
 ```
 
+## Module-4-Security_Testing_&_Vulnerabilities/
+
+```text
+Module-4-Security_Testing_&_Vulnerabilities/
+└── Day-51-OWASP-Juiceshop/
+    ├── Evidence/
+    │   ├── 01-Confidential-Document-Observations.md
+    │   ├── 01-Confidential-Document-Exposed.png
+    │   ├── 02-Other-Solved-Challenges-Evidence.md
+    │   ├── 02-Scoreboard-7-of-179.png
+    │   ├── 03-Score-Board-Solved-Card.png
+    │   ├── 03-DOM-XSS-Solved-Card.png
+    │   ├── 03-Bonus-Payload-Solved-Card.png
+    │   ├── 03-Privacy-Policy-Solved-Card.png
+    │   ├── 03-Error-Handling-Solved-Card.png
+    │   └── 03-Exposed-Metrics-Solved-Card.png
+    └── README.md
+```
+
 ---
 
 # 🏁 Current Portfolio Milestone
@@ -4359,7 +4378,7 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51
 
 **Completed Modules:** Module 1, Module 2, Module 3
 
@@ -4369,9 +4388,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 50 CrazyGames — Module 3 complete
+**Latest Milestone:** Day 51 OWASP Juice Shop — local security challenge testing
 
 **Module 3 Status:** ✅ Complete — Days 31–50
+
+**Module 4 Status:** 🟡 In Progress — Day 51
 
 ## Module 3 Completion Summary
 
@@ -4380,3 +4401,17 @@ Module 3 — Deliberately Buggy Sites / Exploratory Testing — concluded on **O
 The final CrazyGames session added two confirmed, documented findings: mobile header overflow at 375 px (Low / P3) and missing accessible names on the Friends and My games controls (Medium / P2). Game-entry observations that could not be distinguished from browser/runtime limitations were explicitly left inconclusive rather than filed as bugs. The Day 50 README, individual reports, observation log, screenshot evidence, and project-tree entry are all linked above.
 
 **Final status:** ✅ Module 3 complete. The portfolio's next work can begin outside the planned Day 31–50 Module 3 sequence.
+
+---
+
+# 🔐 Module 4: Security Testing & Vulnerabilities
+
+## 📌 Progress Dashboard
+
+| Date | Day | Target | Core Focus Areas | Status |
+| --- | --- | --- | --- | --- |
+| October 22, 2026 | Day 51 | OWASP Juice Shop (local lab) | Challenge-Based Security Testing, XSS, Sensitive Data Exposure & Security Misconfiguration | ✅ Session Logged; Module 4 continues |
+
+### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
+
+The Day 51 session, planned for October 21, was recorded on **October 22, 2026**. In the authorized local OWASP Juice Shop lab, the Score Board showed **7/179 challenges solved**, including the pre-existing Score Board, DOM XSS, Error Handling, and Exposed Metrics completions, plus Privacy Policy, Bonus Payload, and Confidential Document completed during this session. Eleven other selected challenges remain unattempted, so Module 4 continues. The Confidential Document challenge demonstrated direct access to an unprotected file at `/ftp/acquisitions.md` (HTTP 200). See the [Day 51 README](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/README.md), [Confidential Document evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/01-Confidential-Document-Observations.md), and [status evidence for the other five solved challenges](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/02-Other-Solved-Challenges-Evidence.md).
