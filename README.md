@@ -1,6 +1,6 @@
 # 90-day-qa-challenge
 
-QA/QE 90-Days Portfolio | 7 Modules: UI Automation, API/DevTools, Buggy Sites, Security, E2E Workflows, Performance & Advanced Target Envs
+QA/QE 90-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
 
 ---
 
@@ -4289,18 +4289,24 @@ Module-3-Deliberately-Buggy Sites_Exploratory-Testing/
 
 ```text
 Module-4-Security_Testing_&_Vulnerabilities/
-└── Day-51-OWASP-Juiceshop/
+├── Day-51-OWASP-Juiceshop/
+│   ├── Evidence/
+│   │   ├── 01-Confidential-Document-Observations.md
+│   │   ├── 01-Confidential-Document-Exposed.png
+│   │   ├── 02-Other-Solved-Challenges-Evidence.md
+│   │   ├── 02-Scoreboard-7-of-179.png
+│   │   ├── 03-Score-Board-Solved-Card.png
+│   │   ├── 03-DOM-XSS-Solved-Card.png
+│   │   ├── 03-Bonus-Payload-Solved-Card.png
+│   │   ├── 03-Privacy-Policy-Solved-Card.png
+│   │   ├── 03-Error-Handling-Solved-Card.png
+│   │   └── 03-Exposed-Metrics-Solved-Card.png
+│   └── README.md
+└── Day-52-ginandjuice.shop/
     ├── Evidence/
-    │   ├── 01-Confidential-Document-Observations.md
-    │   ├── 01-Confidential-Document-Exposed.png
-    │   ├── 02-Other-Solved-Challenges-Evidence.md
-    │   ├── 02-Scoreboard-7-of-179.png
-    │   ├── 03-Score-Board-Solved-Card.png
-    │   ├── 03-DOM-XSS-Solved-Card.png
-    │   ├── 03-Bonus-Payload-Solved-Card.png
-    │   ├── 03-Privacy-Policy-Solved-Card.png
-    │   ├── 03-Error-Handling-Solved-Card.png
-    │   └── 03-Exposed-Metrics-Solved-Card.png
+    │   ├── bug-01-login-network.json
+    │   ├── bug-02-checkout.json
+    │   └── bug-02checkout-logged-out-redirect.png
     └── README.md
 ```
 
@@ -4378,7 +4384,9 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52
+
+**Resume Portfolio Scope:** Modules 1–4; Module 4 — Security Testing & Vulnerabilities — is the final module featured in the resume portfolio.
 
 **Completed Modules:** Module 1, Module 2, Module 3
 
@@ -4388,11 +4396,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 51 OWASP Juice Shop — local security challenge testing
+**Latest Milestone:** Day 52 Gin & Juice Shop — login and checkout exploration
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 51
+**Module 4 Status:** 🟡 In Progress — Day 52
 
 ## Module 3 Completion Summary
 
@@ -4411,7 +4419,12 @@ The final CrazyGames session added two confirmed, documented findings: mobile he
 | Date | Day | Target | Core Focus Areas | Status |
 | --- | --- | --- | --- | --- |
 | October 22, 2026 | Day 51 | OWASP Juice Shop (local lab) | Challenge-Based Security Testing, XSS, Sensitive Data Exposure & Security Misconfiguration | ✅ Session Logged; Module 4 continues |
+| October 23, 2026 | Day 52 | Gin & Juice Shop | Login and checkout flow exploration; sanitized network evidence | ✅ Session Logged; findings limited to observed behavior |
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
 The Day 51 session, planned for October 21, was recorded on **October 22, 2026**. In the authorized local OWASP Juice Shop lab, the Score Board showed **7/179 challenges solved**, including the pre-existing Score Board, DOM XSS, Error Handling, and Exposed Metrics completions, plus Privacy Policy, Bonus Payload, and Confidential Document completed during this session. Eleven other selected challenges remain unattempted, so Module 4 continues. The Confidential Document challenge demonstrated direct access to an unprotected file at `/ftp/acquisitions.md` (HTTP 200). See the [Day 51 README](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/README.md), [Confidential Document evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/01-Confidential-Document-Observations.md), and [status evidence for the other five solved challenges](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/02-Other-Solved-Challenges-Evidence.md).
+
+### 🗓️ October 23, 2026 — Day 52: Gin & Juice Shop
+
+The Day 52 session explored login and checkout on Gin & Juice Shop. Two POST `/login` submissions with synthetic invalid values returned HTTP 200 and displayed “Invalid username or password”; these results do not confirm failure with valid credentials. With no authenticated session, **Place order** redirected to `/login?redirect=cart`, so the reported invalid checkout error was not reproduced. No order was submitted. See the [Day 52 README](Module-4-Security_Testing_&_Vulnerabilities/Day-52-ginandjuice.shop/README.md), [sanitized login network log](Module-4-Security_Testing_&_Vulnerabilities/Day-52-ginandjuice.shop/Evidence/bug-01-login-network.json), and [checkout screenshot](Module-4-Security_Testing_&_Vulnerabilities/Day-52-ginandjuice.shop/Evidence/bug-02checkout-logged-out-redirect.png).

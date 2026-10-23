@@ -1,0 +1,19 @@
+{
+  "bug_id": "DAY52-02",
+  "title": "Checkout redirects to login for a logged-out user",
+  "application": "https://ginandjuice.shop/",
+  "reproduction_status": "The reported invalid-checkout error was not reproduced",
+  "preconditions": [
+    "A product is in the cart",
+    "The browser is not authenticated"
+  ],
+  "steps": [
+    "Add a product to the cart",
+    "Open the cart",
+    "Select Place order"
+  ],
+  "reported_behavior": "An invalid error appears when using the checkout option.",
+  "observed_behavior": "The application redirects to /login?redirect=cart. No invalid-checkout error is displayed.",
+  "evidence": "day52-checkout-logged-out-redirect.png",
+  "limitations": "No authenticated test session was available. No order was submitted."
+}

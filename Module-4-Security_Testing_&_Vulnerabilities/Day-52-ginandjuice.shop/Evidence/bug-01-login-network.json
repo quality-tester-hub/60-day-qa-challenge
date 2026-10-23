@@ -1,0 +1,56 @@
+{
+  "bug_id": "DAY52-01",
+  "title": "Login form rejects two submitted test passwords",
+  "target": "https://ginandjuice.shop/",
+  "captured_at": "2026-10-23",
+  "evidence_type": "Browser document-navigation network metadata",
+  "test_data": {
+    "username": "Synthetic unregistered test username",
+    "password": "Synthetic invalid test values; not stored",
+    "password_submissions": 2
+  },
+  "login_form": {
+    "method": "POST",
+    "path": "/login",
+    "visible_field": "password"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "request": {
+        "method": "POST",
+        "path": "/login",
+        "body": "[REDACTED]"
+      },
+      "response": {
+        "type": "document navigation",
+        "status": 200,
+        "transfer_size_bytes": 2245,
+        "encoded_body_size_bytes": 1945
+      },
+      "observed_ui": {
+        "path": "/login",
+        "message": "Invalid username or password."
+      }
+    },
+    {
+      "attempt": 2,
+      "request": {
+        "method": "POST",
+        "path": "/login",
+        "body": "[REDACTED]"
+      },
+      "response": {
+        "type": "document navigation",
+        "status": 200,
+        "transfer_size_bytes": 2249,
+        "encoded_body_size_bytes": 1949
+      },
+      "observed_ui": {
+        "path": "/login",
+        "message": "Invalid username or password."
+      }
+    }
+  ],
+  "limitations": "Only synthetic invalid credentials were used. This does not verify whether valid account credentials fail. Request bodies, query strings, cookies, CSRF tokens, authorization headers, and response bodies were not recorded."
+}
