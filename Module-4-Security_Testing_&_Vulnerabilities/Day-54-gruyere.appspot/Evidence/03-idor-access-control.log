@@ -1,0 +1,16 @@
+ASSESSMENT: Insecure Direct Object References (IDOR) / Access Control
+TARGET INSTANCE: Isolated Gruyere Sandbox; synthetic accounts only
+DATE: 2026-10-25
+
+TEST PROCEDURE:
+1. Established two synthetic test accounts, Account A and Account B.
+2. Authenticated session: Account A. Made a read-only request for Account B's profile using Account B's identifier.
+3. Checked the response for a private canary value belonging to Account B.
+
+OBSERVED BEHAVIOR:
+- The request made under Account A's authenticated session returned Account B's profile response.
+- The response included Account B's synthetic private canary field.
+- No profile data was modified during this check.
+
+RESULT:
+Unauthorized read access to the synthetic private canary was confirmed through the tested profile path. The observation is limited to this endpoint and test data.

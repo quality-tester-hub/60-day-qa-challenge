@@ -1,0 +1,18 @@
+ASSESSMENT: Cross-Site Request Forgery (CSRF) Controls
+TARGET INSTANCE: Isolated Gruyere Sandbox; instance identifier redacted
+DATE: 2026-10-25
+
+TEST PROCEDURE:
+1. Navigated to the authenticated user's snippet-management interface.
+2. Inspected the anchor href associated with the snippet-removal action.
+
+OBSERVED BEHAVIOR:
+- The removal control targeted the deletesnippet endpoint with an index parameter.
+- Request method: GET
+- No anti-CSRF token was visible in the inspected link.
+
+LIMITATION:
+No cross-origin request was sent and no deletion was triggered as part of this review. Cross-origin behavior was not tested.
+
+CONCLUSION:
+The inspected control has a CSRF-relevant design weakness because a state-changing action appears to use GET and the link contains no visible anti-CSRF token. This observation alone does not confirm a successful CSRF exploit.

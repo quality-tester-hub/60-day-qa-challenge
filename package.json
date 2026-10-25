@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "validate:day54": "node scripts/validate-day54-evidence.mjs"
   },
   "keywords": [],
   "author": "",

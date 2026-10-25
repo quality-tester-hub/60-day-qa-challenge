@@ -3746,6 +3746,7 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 22, 2026 | Day 51 | OWASP Juice Shop (local lab) | Challenge-Based Security Testing, XSS, Sensitive Data Exposure & Security Misconfiguration | ✅ Session Logged; Module 4 continues |
 | October 23, 2026 | Day 52 | Gin & Juice Shop | Login and checkout flow exploration; sanitized network evidence | ✅ Session Logged; findings limited to observed behavior |
 | October 24, 2026 | Day 53 | bWAPP download page | Narrow viewport layout and content visibility | ✅ UI bug documented with screenshot evidence |
+| October 25, 2026 | Day 54 | Google Gruyere | XSS, CSRF, IDOR, RCE, information disclosure, path traversal | 🧪 IDOR confirmed; RCE/path traversal not tested; no sensitive error disclosure observed |
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
@@ -3758,6 +3759,10 @@ The Day 52 session explored login and checkout on Gin & Juice Shop. Two POST `/l
 ### 🗓️ October 24, 2026 — Day 53: bWAPP
 
 The bWAPP download page has a reproducible responsive-layout issue at a 688 × 491 px browser viewport: page content is 1260 px wide, causing horizontal overflow and clipping the bee-box description; the footer also overlaps visible content. The issue and reproduction details are documented in the [Day 53 README](Module-4-Security_Testing_&_Vulnerabilities/Day-53-Bwapp/README.md), with the [UI screenshot evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-53-Bwapp/day-53-download-page-ui.png). This is a UI bug on the download page, not a confirmed vulnerability in the bWAPP application.
+
+### 🗓️ October 25, 2026 — Day 54: Google Gruyere
+
+Day 54 documents a focused Google Gruyere assessment in the [Day 54 README](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/README.md), with separate plain-text evidence logs for [stored XSS](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/01-stored-xss-test.log), [CSRF controls](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/02-csrf-control-review.log), and [IDOR/access control](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/03-idor-access-control.log), plus a [vulnerability assessment report](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Defects_&_Bugreports/01-gruyere-vulnerability-assessment.md). The evidence distinguishes observed control weaknesses from confirmed exploitation; cross-origin CSRF behavior was not tested. Run `npm run validate:day54` locally; the [GitHub Actions workflow](.github/workflows/day54-evidence-validation.yml) repeats this check on relevant pushes and pull requests.
 
 # 📁 Project Structure
 
@@ -4322,12 +4327,23 @@ Module-4-Security_Testing_&_Vulnerabilities/
 │   │   ├── 03-Error-Handling-Solved-Card.png
 │   │   └── 03-Exposed-Metrics-Solved-Card.png
 │   └── README.md
-└── Day-52-ginandjuice.shop/
+├── Day-52-ginandjuice.shop/
+│   ├── Evidence/
+│   │   ├── bug-01-login-network.json
+│   │   ├── bug-02-checkout.json
+│   │   └── bug-02checkout-logged-out-redirect.png
+│   └── README.md
+├── Day-53-Bwapp/
+│   ├── README.md
+│   └── day-53-download-page-ui.png
+└── Day-54-gruyere.appspot/
+    ├── README.md
+    ├── Defects_&_Bugreports/
+    │   └── 01-gruyere-vulnerability-assessment.md
     ├── Evidence/
-    │   ├── bug-01-login-network.json
-    │   ├── bug-02-checkout.json
-    │   └── bug-02checkout-logged-out-redirect.png
-    └── README.md
+    │   ├── 01-stored-xss-test.log
+    │   ├── 02-csrf-control-review.log
+    │   └── 03-idor-access-control.log
 ```
 
 ---
@@ -4431,4 +4447,3 @@ The final CrazyGames session added two confirmed, documented findings: mobile he
 **Final status:** ✅ Module 3 complete. The portfolio's next work can begin outside the planned Day 31–50 Module 3 sequence.
 
 ---
-

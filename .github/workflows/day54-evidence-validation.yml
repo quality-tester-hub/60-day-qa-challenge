@@ -1,0 +1,38 @@
+name: Day 54 Evidence Validation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/**'
+      - 'scripts/validate-day54-evidence.mjs'
+      - 'package.json'
+      - 'README.md'
+      - '.github/workflows/day54-evidence-validation.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/**'
+      - 'scripts/validate-day54-evidence.mjs'
+      - 'package.json'
+      - 'README.md'
+      - '.github/workflows/day54-evidence-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-day54-evidence:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate Day 54 evidence
+        run: npm run validate:day54
