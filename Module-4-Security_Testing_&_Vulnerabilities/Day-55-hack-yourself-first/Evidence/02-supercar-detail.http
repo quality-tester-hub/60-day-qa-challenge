@@ -1,0 +1,31 @@
+Day 55 — Read-only HTTP/UI observation
+Target: https://hack-yourself-first.com/Supercar/7
+Observed: 2026-10-26 20:16 +05:30
+
+Request
+GET /Supercar/7 HTTP/2
+Host: hack-yourself-first.com
+
+Response metadata
+HTTP/2 200
+content-type: text/html; charset=utf-8
+cache-control: private
+x-xss-protection: 0
+x-aspnetmvc-version: 5.1
+
+UI observation
+Opening the vehicle details page in the browser produced a native JavaScript
+alert ("81317") during page rendering and blocked access to the page until the
+dialog is handled. The response is server-rendered HTML, not a JSON API.
+The page includes a community comments section. The response body and comment
+contents are intentionally not reproduced here.
+
+Reproduction
+1. Send the read-only GET request above in a browser.
+2. Observe the unexpected blocking browser alert during rendering.
+
+Scope / safety
+No form submission, state change, payload replay, or external request was
+performed. A separate GET with the response body discarded confirmed the
+HTTP status and metadata above. Stop further testing unless explicitly
+authorized.

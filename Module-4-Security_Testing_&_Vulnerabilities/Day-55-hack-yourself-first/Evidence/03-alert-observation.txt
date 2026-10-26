@@ -1,0 +1,27 @@
+Day 55 - Unexpected alert during vehicle details rendering
+
+Evidence type: Textual browser observation; no screenshot
+Observed: 2026-10-26 20:16 +05:30
+Related request/response capture: 02-supercar-detail.http
+
+Action
+Opened the vehicle details page at:
+https://hack-yourself-first.com/Supercar/7
+
+Observed result
+A native JavaScript alert displaying "81317" appeared during page rendering.
+The alert blocked access to the page until it was handled.
+
+Impact observed
+The dialog interrupted use of the vehicle details page. This records the
+observed behavior only; it does not establish how the alert was triggered.
+
+Assessment
+Potential client-side script execution is unconfirmed. The available
+request/response capture records HTTP 200 and HTML content, but does not include
+the response body or evidence connecting attacker-controlled input to the
+alert. Do not report this as confirmed XSS based on this evidence alone.
+
+Scope
+No form submission, state change, payload replay, or additional request was
+performed. Further testing requires authorization.

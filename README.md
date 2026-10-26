@@ -3747,7 +3747,7 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 23, 2026 | Day 52 | Gin & Juice Shop | Login and checkout flow exploration; sanitized network evidence | ✅ Session Logged; findings limited to observed behavior |
 | October 24, 2026 | Day 53 | bWAPP download page | Narrow viewport layout and content visibility | ✅ UI bug documented with screenshot evidence |
 | October 25, 2026 | Day 54 | Google Gruyere | XSS, CSRF, IDOR, RCE, information disclosure, path traversal | 🧪 IDOR confirmed; RCE/path traversal not tested; no sensitive error disclosure observed |
-
+| October 26, 2026 | Day 55 | Hack Yourself First | Read-only page observation; HTTP metadata and unexpected alert ✅
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
 The Day 51 session, planned for October 21, was recorded on **October 22, 2026**. In the authorized local OWASP Juice Shop lab, the Score Board showed **7/179 challenges solved**, including the pre-existing Score Board, DOM XSS, Error Handling, and Exposed Metrics completions, plus Privacy Policy, Bonus Payload, and Confidential Document completed during this session. Eleven other selected challenges remain unattempted, so Module 4 continues. The Confidential Document challenge demonstrated direct access to an unprotected file at `/ftp/acquisitions.md` (HTTP 200). See the [Day 51 README](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/README.md), [Confidential Document evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/01-Confidential-Document-Observations.md), and [status evidence for the other five solved challenges](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/02-Other-Solved-Challenges-Evidence.md).
@@ -3763,6 +3763,10 @@ The bWAPP download page has a reproducible responsive-layout issue at a 688 × 4
 ### 🗓️ October 25, 2026 — Day 54: Google Gruyere
 
 Day 54 documents a focused Google Gruyere assessment in the [Day 54 README](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/README.md), with separate plain-text evidence logs for [stored XSS](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/01-stored-xss-test.log), [CSRF controls](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/02-csrf-control-review.log), and [IDOR/access control](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Evidence/03-idor-access-control.log), plus a [vulnerability assessment report](Module-4-Security_Testing_&_Vulnerabilities/Day-54-gruyere.appspot/Defects_&_Bugreports/01-gruyere-vulnerability-assessment.md). The evidence distinguishes observed control weaknesses from confirmed exploitation; cross-origin CSRF behavior was not tested. Run `npm run validate:day54` locally; the [GitHub Actions workflow](.github/workflows/day54-evidence-validation.yml) repeats this check on relevant pushes and pull requests.
+
+### 🗓️ October 26, 2026 — Day 55: Hack Yourself First
+
+Day 55 records a read-only observation of the Hack Yourself First vehicle details page. A native JavaScript alert appeared during rendering, but the available HTTP capture omits the response body and does not establish that attacker-controlled input caused the alert. This is an unexpected behavior, not a confirmed XSS or critical vulnerability. See the [Day 55 README](Module-4-Security_Testing_&_Vulnerabilities/Day-55-hack-yourself-first/README.md), [HTTP metadata capture](Module-4-Security_Testing_&_Vulnerabilities/Day-55-hack-yourself-first/Evidence/02-supercar-detail.http), and [text-only alert observation](Module-4-Security_Testing_&_Vulnerabilities/Day-55-hack-yourself-first/Evidence/03-alert-observation.txt). No API endpoint or response was captured, and no further public-site testing should occur without explicit authorization.
 
 # 📁 Project Structure
 
@@ -4336,14 +4340,20 @@ Module-4-Security_Testing_&_Vulnerabilities/
 ├── Day-53-Bwapp/
 │   ├── README.md
 │   └── day-53-download-page-ui.png
-└── Day-54-gruyere.appspot/
+├── Day-54-gruyere.appspot/
+│   ├── README.md
+│   ├── Defects_&_Bugreports/
+│   │   └── 01-gruyere-vulnerability-assessment.md
+│   └── Evidence/
+│       ├── 01-stored-xss-test.log
+│       ├── 02-csrf-control-review.log
+│       └── 03-idor-access-control.log
+└── Day-55-hack-yourself-first/
     ├── README.md
-    ├── Defects_&_Bugreports/
-    │   └── 01-gruyere-vulnerability-assessment.md
-    ├── Evidence/
-    │   ├── 01-stored-xss-test.log
-    │   ├── 02-csrf-control-review.log
-    │   └── 03-idor-access-control.log
+    └── Evidence/
+        ├── 01-homepage-horizontal-overflow.png
+        ├── 02-supercar-detail.http
+        └── 03-alert-observation.txt
 ```
 
 ---
@@ -4420,7 +4430,7 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53, Day 54, Day 55
 
 **Resume Portfolio Scope:** Modules 1–4; Module 4 — Security Testing & Vulnerabilities — is the final module featured in the resume portfolio.
 
@@ -4432,11 +4442,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 53 bWAPP — responsive UI bug documented with screenshot evidence
+**Latest Milestone:** Day 55 Hack Yourself First — read-only alert observation documented; vulnerability unconfirmed
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 53
+**Module 4 Status:** 🟡 In Progress — Day 55
 
 ## Module 3 Completion Summary
 
