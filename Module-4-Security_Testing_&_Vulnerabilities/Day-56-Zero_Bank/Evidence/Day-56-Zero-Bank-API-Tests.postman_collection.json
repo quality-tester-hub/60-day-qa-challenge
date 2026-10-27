@@ -1,0 +1,632 @@
+{
+  "info": {
+    "_postman_id": "d5004f03-b818-42c5-b62a-fc09898ce4b1",
+    "name": "Day-56-Zero-Bank-API-Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55615134",
+    "_collection_link": "https://go.postman.co/collection/55615134-d5004f03-b818-42c5-b62a-fc09898ce4b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Reconnaissance & Public Endpoints",
+      "item": []
+    },
+    {
+      "name": "Authentication Flow",
+      "item": []
+    },
+    {
+      "name": "Authenticated Actions & Bill Pay",
+      "item": []
+    },
+    {
+      "name": "GET Home Page",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response contains Zero Bank branding\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Zero Bank\");",
+              "});",
+              "pm.test(\"Response time is acceptable\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/index.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "index.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/index.html\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Login Page",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"Response is HTML\", function () {\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\n});\npm.test(\"Zero Bank page loads\", function () {\n    pm.expect(pm.response.text()).to.include(\"Zero\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/login.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "login.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/login.html\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Feedback Page",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Feedback form is present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"sendFeedback.html\");",
+              "});",
+              "pm.test(\"Form has required fields\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"name=\\\"name\\\"\");",
+              "    pm.expect(pm.response.text()).to.include(\"name=\\\"email\\\"\");",
+              "    pm.expect(pm.response.text()).to.include(\"name=\\\"subject\\\"\");",
+              "    pm.expect(pm.response.text()).to.include(\"name=\\\"comment\\\"\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/feedback.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "feedback.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/feedback.html\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Search",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Search results page loads\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Zero\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/search.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "search.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/search.html?searchTerm=bank\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Authenticated Page (Login Verification)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"Authenticated nav is present - username shown\", function () {\n    pm.expect(pm.response.text()).to.include(\"username\");\n});\npm.test(\"Logout link is present - session is active\", function () {\n    pm.expect(pm.response.text()).to.include(\"logout_link\");\n});\npm.test(\"Account Summary content loads\", function () {\n    pm.expect(pm.response.text()).to.include(\"Account Summary\");\n});\n// Store cookie for subsequent requests\npm.environment.set(\"cookie\", \"username=\" + pm.environment.get(\"username\") + \"; password=\" + pm.environment.get(\"password\"));"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "username={{username}}; password={{password}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/bank/account-summary.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "account-summary.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST \"{{baseUrl}}/signin.html\" --data-urlencode \"user_login={{username}}\" --data-urlencode \"user_password={{password}}\" --data-urlencode \"user_token=1097da7d-ac50-4d96-8d01-eb4f14c2bc07\""
+      },
+      "response": []
+    },
+    {
+      "name": "POST Login - Invalid Credentials",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Invalid login does not show authenticated nav\", function () {",
+              "    pm.expect(pm.response.text()).to.not.include(\"logout_link\");",
+              "});",
+              "pm.test(\"Login page is shown again or error is present\", function () {",
+              "    const body = pm.response.text();",
+              "    const hasLoginForm = body.includes(\"login_form\") || body.includes(\"signin.html\") || body.includes(\"Login\") || body.includes(\"error\");",
+              "    pm.expect(hasLoginForm).to.be.true;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "user_login",
+              "value": "wronguser"
+            },
+            {
+              "key": "user_password",
+              "value": "wrongpass"
+            },
+            {
+              "key": "user_token",
+              "value": "1097da7d-ac50-4d96-8d01-eb4f14c2bc07"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/signin.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "signin.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST \"{{baseUrl}}/signin.html\" --data-urlencode \"user_login=wronguser\" --data-urlencode \"user_password=wrongpass\" --data-urlencode \"user_token=1097da7d-ac50-4d96-8d01-eb4f14c2bc07\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Account Summary",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Account Summary page loads\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Account Summary\");",
+              "});",
+              "pm.test(\"User is authenticated - username in nav\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"username\");",
+              "});",
+              "pm.test(\"Banking tabs are present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"account_summary_tab\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bank/account-summary.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "account-summary.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/bank/account-summary.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Logout",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/logout.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "logout.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/logout.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Account Activity",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Account Activity page loads\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Account Activity\");",
+              "});",
+              "pm.test(\"User is authenticated\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"logout_link\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bank/account-activity.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "account-activity.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/bank/account-activity.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Transfer Funds Page",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Transfer Funds page loads\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Transfer Funds\");",
+              "});",
+              "pm.test(\"Transfer form is present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"transfer-funds-verify.html\");",
+              "});",
+              "pm.test(\"From and To account selectors present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"fromAccountId\");",
+              "    pm.expect(pm.response.text()).to.include(\"toAccountId\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bank/transfer-funds.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "transfer-funds.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/bank/transfer-funds.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    },
+    {
+      "name": "POST Transfer Funds",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Transfer response is received\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Zero\");",
+              "});",
+              "pm.test(\"User remains authenticated\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"username\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "fromAccountId",
+              "value": "1"
+            },
+            {
+              "key": "toAccountId",
+              "value": "2"
+            },
+            {
+              "key": "amount",
+              "value": "100"
+            },
+            {
+              "key": "description",
+              "value": "Test transfer"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/bank/transfer-funds-verify.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "transfer-funds-verify.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST \"{{baseUrl}}/bank/transfer-funds-verify.html\" -H \"Cookie: {{cookie}}\" --data-urlencode \"fromAccountId=1\" --data-urlencode \"toAccountId=2\" --data-urlencode \"amount=100\" --data-urlencode \"description=Test transfer\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Pay Bills Page",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Pay Bills page loads\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Pay Bills\");",
+              "});",
+              "pm.test(\"Pay Saved Payee link present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"pay-bills-saved-payee.html\");",
+              "});",
+              "pm.test(\"Add New Payee link present\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"pay-bills-new-payee.html\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bank/pay-bills.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "pay-bills.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/bank/pay-bills.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    },
+    {
+      "name": "POST Pay Saved Payee",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Bill payment response received\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"Zero\");",
+              "});",
+              "pm.test(\"User remains authenticated after payment\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"username\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "payee",
+              "value": "sprint"
+            },
+            {
+              "key": "account",
+              "value": "1"
+            },
+            {
+              "key": "amount",
+              "value": "50"
+            },
+            {
+              "key": "date",
+              "value": "2026-10-27"
+            },
+            {
+              "key": "description",
+              "value": "Monthly bill payment"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/bank/pay-bills-saved-payee.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bank",
+            "pay-bills-saved-payee.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST \"{{baseUrl}}/bank/pay-bills-saved-payee.html\" -H \"Cookie: {{cookie}}\" --data-urlencode \"payee=sprint\" --data-urlencode \"account=1\" --data-urlencode \"amount=50\" --data-urlencode \"date=2026-10-27\" --data-urlencode \"description=Monthly bill payment\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET Logout",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{cookie}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/logout.html",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "logout.html"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{baseUrl}}/logout.html\" -H \"Cookie: {{cookie}}\""
+      },
+      "response": []
+    }
+  ]
+}
