@@ -3749,6 +3749,7 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 25, 2026 | Day 54 | Google Gruyere | XSS, CSRF, IDOR, RCE, information disclosure, path traversal | 🧪 IDOR confirmed; RCE/path traversal not tested; no sensitive error disclosure observed |
 | October 26, 2026 | Day 55 | Hack Yourself First | Read-only page observation; HTTP metadata and unexpected alert | ✅ Session logged; alert cause unconfirmed |
 | October 27, 2026 | Day 56 | Zero Bank | Banking page exploration, sign-in redirect, account activity search | ✅ Session documented; redirect failure and search behavior recorded |
+| October 28, 2026 | Day 57 | TryHackMe — Crack the hash and Vulnerability Capstone | DOM inspection, duplicate IDs, challenge-room review | ✅ Day completed; duplicate DOM IDs documented; Capstone not assessed (Premium-gated) |
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
@@ -3773,6 +3774,10 @@ Day 55 records a read-only observation of the Hack Yourself First vehicle detail
 ### 🗓️ October 27, 2026 — Day 56: Zero Bank
 
 Day 56 explored Zero Bank's public online-banking page and the Account Summary, Account Activity, Transfer Funds, Pay Bills, My Money Map, and Online Statements sections using the site's demo account. Two behaviors were recorded: sign-in led to an HTTPS `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` at the post-login redirect, although direct navigation afterward showed the authenticated username; and Find Transactions displayed rows when all filters were blank despite instructing the user to enter at least one filter. The latter is recorded as a UI/instruction mismatch pending confirmation that an empty search is not intended to show all transactions. The transfer and bill-pay forms were inspected but not submitted; the Money Map totals were arithmetically consistent, and the statement listing loaded. No transfers, payments, or payee additions were made. See the [Day 56 README](Module-4-Security_Testing_&_Vulnerabilities/Day-56-Zero_Bank/README.md) and [new exploratory findings](Module-4-Security_Testing_&_Vulnerabilities/Day-56-Zero_Bank/Evidence/Day-56-New-Findings.md). Loom video capture is left to the portfolio owner.
+
+### 🗓️ October 28, 2026 — Day 57: TryHackMe Challenges
+
+**Day 57 completed October 28, 2026.** DOM inspection of [Crack the hash](https://tryhackme.com/room/crackthehash) confirmed duplicate HTML IDs on answer inputs across its two task levels, making ID-based lookups ambiguous. The finding and selector/API counts are recorded as [structured DOM evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/Evidence/Day-57-DOM-Evidence.json). [Vulnerability Capstone](https://tryhackme.com/room/vulnerabilitycapstone) remains unassessed because its machine is Premium-gated. See the [Day 57 README](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/README.md).
 
 # 📁 Project Structure
 
@@ -4360,12 +4365,16 @@ Module-4-Security_Testing_&_Vulnerabilities/
 │       ├── 01-homepage-horizontal-overflow.png
 │       ├── 02-supercar-detail.http
 │       └── 03-alert-observation.txt
-└── Day-56-Zero_Bank/
+├── Day-56-Zero_Bank/
+│   ├── README.md
+│   └── Evidence/
+│       ├── Day-56-New-Findings.md
+│       ├── Day-56-Zero-Bank-API-Tests.postman_collection.json
+│       └── Day-56-Zero Bank Local Lab.postman_environment.json
+└── Day-57-TryHackMe-Challenges/
     ├── README.md
     └── Evidence/
-        ├── Day-56-New-Findings.md
-        ├── Day-56-Zero-Bank-API-Tests.postman_collection.json
-        └── Day-56-Zero Bank Local Lab.postman_environment.json
+        └── Day-57-DOM-Evidence.json
 ```
 
 ---
@@ -4442,7 +4451,7 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53, Day 54, Day 55, Day 56
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53, Day 54, Day 55, Day 56, Day 57
 
 **Resume Portfolio Scope:** Modules 1–4; Module 4 — Security Testing & Vulnerabilities — is the final module featured in the resume portfolio.
 
@@ -4454,11 +4463,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 56 Zero Bank — exploratory findings documented; empty-search behavior requires triage
+**Latest Milestone:** Day 57 TryHackMe — duplicate DOM IDs confirmed on Crack the hash; Vulnerability Capstone remains Premium-gated
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 56
+**Module 4 Status:** 🟡 In Progress — Day 57 completed October 28, 2026
 
 ## Module 3 Completion Summary
 

@@ -1,0 +1,121 @@
+{
+  "captureType": "browser-dom-inspection",
+  "observedAt": "2026-10-28",
+  "page": "https://tryhackme.com/room/crackthehash",
+  "findingId": "THM-CTH-DOM-001",
+  "title": "Duplicate HTML id attributes on answer inputs",
+  "expected": "Each id attribute value is unique within the document.",
+  "observed": {
+    "mainFormCount": 9,
+    "duplicateIds": [
+      {
+        "id": "1",
+        "count": 2,
+        "elements": [
+          {
+            "tag": "INPUT",
+            "name": "1",
+            "ariaLabelledby": "question-text-1-1",
+            "formIndex": 0
+          },
+          {
+            "tag": "INPUT",
+            "name": "1",
+            "ariaLabelledby": "question-text-2-1",
+            "formIndex": 5
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "count": 2,
+        "elements": [
+          {
+            "tag": "INPUT",
+            "name": "2",
+            "ariaLabelledby": "question-text-1-2",
+            "formIndex": 1
+          },
+          {
+            "tag": "INPUT",
+            "name": "2",
+            "ariaLabelledby": "question-text-2-2",
+            "formIndex": 6
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "count": 2,
+        "elements": [
+          {
+            "tag": "INPUT",
+            "name": "3",
+            "ariaLabelledby": "question-text-1-3",
+            "formIndex": 2
+          },
+          {
+            "tag": "INPUT",
+            "name": "3",
+            "ariaLabelledby": "question-text-2-3",
+            "formIndex": 7
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "count": 2,
+        "elements": [
+          {
+            "tag": "INPUT",
+            "name": "4",
+            "ariaLabelledby": "question-text-1-4",
+            "formIndex": 3
+          },
+          {
+            "tag": "INPUT",
+            "name": "4",
+            "ariaLabelledby": "question-text-2-4",
+            "formIndex": 8
+          }
+        ]
+      },
+      {
+        "id": "accordion-details",
+        "count": 2,
+        "elements": [
+          {
+            "tag": "DIV"
+          },
+          {
+            "tag": "DIV"
+          }
+        ]
+      }
+    ],
+    "domLookupChecks": {
+      "attributeSelectorForId1Matches": 2,
+      "getElementById1ReturnsFormIndex": 0
+    },
+    "accessibleNameReferenceChecks": {
+      "inputCount": 9,
+      "ariaLabelledbyTargetsUniqueAndPresent": true
+    }
+  },
+  "assessment": {
+    "confirmed": true,
+    "category": "DOM conformance",
+    "impact": "ID-based DOM lookups and automation can resolve ambiguously or select the first matching answer field instead of the intended field.",
+    "notClaimed": [
+      "No answer submission failure was tested.",
+      "No accessible-name defect was observed; aria-labelledby targets were unique and present.",
+      "No hash was cracked and no password was recovered."
+    ]
+  },
+  "method": {
+    "evidenceSource": "Live page DOM properties and selector/API result counts",
+    "screenshotsUsed": false,
+    "videoUsed": false,
+    "textCaptureUsed": false
+  }
+}
