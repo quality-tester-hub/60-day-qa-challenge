@@ -4,11 +4,18 @@ QA/QE 90-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as t
 
 ---
 
+## 📌 Portfolio Progress Dashboard
+
+| Latest Activity | Day | Module | Focus | Status |
+| --- | --- | --- | --- | --- |
+| October 29, 2026 | Day 58 | Module 4 — DemoBlaze | UI, API integration, backend data, and HTTPS hardening findings documented | 🟡 Four requested categories documented; no exploit attempted — [Day 58 details](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/README.md) |
+| October 28, 2026 | Day 57 | Module 4 — TryHackMe Challenges | Duplicate DOM IDs confirmed on Crack the hash; Vulnerability Capstone remains Premium-gated | ✅ Completed — [Day 57 details](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/README.md) |
+
 # 🚀 Module 1: UI Automation Mastery with Playwright
 
 Welcome to the central repository for Module 1 - UI Automation. This project tracks hands-on practice covering modern Web QA Automation patterns, end-to-end workflows, resilient locators, session management, dynamic element handling, and test execution using Playwright and TypeScript.
 
-## 📌 Progress Dashboard
+## 📌 Module 1 Progress Dashboard
 
 | Date | Day | Target Site | Core Focus Areas | Status |
 | --- | --- | --- | --- | --- |
@@ -3750,6 +3757,7 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 26, 2026 | Day 55 | Hack Yourself First | Read-only page observation; HTTP metadata and unexpected alert | ✅ Session logged; alert cause unconfirmed |
 | October 27, 2026 | Day 56 | Zero Bank | Banking page exploration, sign-in redirect, account activity search | ✅ Session documented; redirect failure and search behavior recorded |
 | October 28, 2026 | Day 57 | TryHackMe — Crack the hash and Vulnerability Capstone | DOM inspection, duplicate IDs, challenge-room review | ✅ Day completed; duplicate DOM IDs documented; Capstone not assessed (Premium-gated) |
+| October 29, 2026 | Day 58 | DemoBlaze Product Store | Responsive UI, accessibility, category pagination, catalog data, HSTS | ✅ Four requested categories documented; security finding is passive configuration evidence |
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
@@ -3778,6 +3786,10 @@ Day 56 explored Zero Bank's public online-banking page and the Account Summary, 
 ### 🗓️ October 28, 2026 — Day 57: TryHackMe Challenges
 
 **Day 57 completed October 28, 2026.** DOM inspection of [Crack the hash](https://tryhackme.com/room/crackthehash) confirmed duplicate HTML IDs on answer inputs across its two task levels, making ID-based lookups ambiguous. The finding and selector/API counts are recorded as [structured DOM evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/Evidence/Day-57-DOM-Evidence.json). [Vulnerability Capstone](https://tryhackme.com/room/vulnerabilitycapstone) remains unassessed because its machine is Premium-gated. See the [Day 57 README](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/README.md).
+
+### 🗓️ October 29, 2026 — Day 58: DemoBlaze
+
+Day 58 testing of the [DemoBlaze Product Store](https://demoblaze.com/) documented three UI/accessibility findings, one category-pagination API integration defect, one backend catalog-image mismatch, and a passive HSTS configuration weakness. Findings are supported by DOM checks, ordinary API responses, response headers, and screenshots; no exploit was attempted. See the [Day 58 README](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/README.md) and its [evidence log and screenshots](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/Evidence/).
 
 # 📁 Project Structure
 
@@ -4371,10 +4383,19 @@ Module-4-Security_Testing_&_Vulnerabilities/
 │       ├── Day-56-New-Findings.md
 │       ├── Day-56-Zero-Bank-API-Tests.postman_collection.json
 │       └── Day-56-Zero Bank Local Lab.postman_environment.json
-└── Day-57-TryHackMe-Challenges/
+├── Day-57-TryHackMe-Challenges/
+│   ├── README.md
+│   └── Evidence/
+│       └── Day-57-DOM-Evidence.json
+└── Day-58-demoblaze/
     ├── README.md
     └── Evidence/
-        └── Day-57-DOM-Evidence.json
+        ├── Day-58-Read-Only-Evidence.md
+        ├── Day-58-Product-Catalog.png
+        ├── Day-58-Mobile-320px.png
+        ├── Day-58-Login-Modal.png
+        ├── Day-58-Category-Pagination-Mix.png
+        └── Day-58-Samsung-Galaxy-S7-Detail.png
 ```
 
 ---
@@ -4463,11 +4484,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 57 TryHackMe — duplicate DOM IDs confirmed on Crack the hash; Vulnerability Capstone remains Premium-gated
+**Latest Milestone:** Day 58 DemoBlaze — UI, API-integration, backend catalog, and passive HSTS findings documented
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 57 completed October 28, 2026
+**Module 4 Status:** 🟡 In Progress — Day 58 findings documented across UI, API, backend, and security configuration
 
 ## Module 3 Completion Summary
 
