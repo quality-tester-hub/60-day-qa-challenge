@@ -1,4 +1,4 @@
-# 90-day-qa-challenge
+# 60-day-qa-challenge
 
 QA/QE 60-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
 
