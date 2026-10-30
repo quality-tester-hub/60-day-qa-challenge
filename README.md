@@ -1,15 +1,6 @@
 # 90-day-qa-challenge
 
-QA/QE 90-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
-
----
-
-## 📌 Portfolio Progress Dashboard
-
-| Latest Activity | Day | Module | Focus | Status |
-| --- | --- | --- | --- | --- |
-| October 29, 2026 | Day 58 | Module 4 — DemoBlaze | UI, API integration, backend data, and HTTPS hardening findings documented | 🟡 Four requested categories documented; no exploit attempted — [Day 58 details](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/README.md) |
-| October 28, 2026 | Day 57 | Module 4 — TryHackMe Challenges | Duplicate DOM IDs confirmed on Crack the hash; Vulnerability Capstone remains Premium-gated | ✅ Completed — [Day 57 details](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/README.md) |
+QA/QE 60-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
 
 # 🚀 Module 1: UI Automation Mastery with Playwright
 
