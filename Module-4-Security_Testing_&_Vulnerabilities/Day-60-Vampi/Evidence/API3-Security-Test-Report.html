@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; color: var(--content-color-primary); padding: 16px; overflow-y: auto; height: 100%; }
+  h2 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  h3 { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.4px; }
+  .badge-critical { background: #fde8e8; color: #c0392b; }
+  .badge-warn { background: #fef3cd; color: #856404; }
+  .badge-pass { background: #d4edda; color: #1a5c2e; }
+  .badge-fail { background: #fde8e8; color: #c0392b; }
+  .badge-error { background: #fff3e0; color: #b45309; }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .summary-card { border: 1px solid var(--border-color-default, #e0e0e0); border-radius: 6px; padding: 12px; }
+  .summary-card .endpoint { font-size: 11px; font-family: monospace; color: var(--content-color-secondary, #666); margin-bottom: 6px; word-break: break-all; }
+  .summary-card .status-line { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .http-status { font-size: 13px; font-weight: 700; }
+  .http-200 { color: #c0392b; }
+  .score-row { display: flex; gap: 12px; font-size: 12px; }
+  .score-item { display: flex; flex-direction: column; align-items: center; }
+  .score-num { font-size: 18px; font-weight: 700; line-height: 1; }
+  .score-label { font-size: 10px; color: var(--content-color-secondary, #888); margin-top: 2px; }
+  .pass-num { color: #1a5c2e; }
+  .fail-num { color: #c0392b; }
+  .err-num { color: #b45309; }
+
+  .section { margin-bottom: 14px; }
+  .request-block { border: 1px solid var(--border-color-default, #e0e0e0); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+  .request-header { padding: 8px 12px; display: flex; align-items: center; gap: 8px; background: var(--background-color-secondary, #f5f5f5); border-bottom: 1px solid var(--border-color-default, #e0e0e0); }
+  .method-tag { background: #2196F3; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .req-name { font-weight: 600; font-size: 12px; flex: 1; }
+  .test-list { padding: 0; list-style: none; }
+  .test-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 12px; border-bottom: 1px solid var(--border-color-default, #e8e8e8); }
+  .test-item:last-child { border-bottom: none; }
+  .icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .test-name { font-weight: 500; font-size: 12px; line-height: 1.4; }
+  .test-error { font-size: 11px; color: #c0392b; margin-top: 3px; font-family: monospace; line-height: 1.4; word-break: break-word; }
+  .test-error-warn { font-size: 11px; color: #b45309; margin-top: 3px; font-family: monospace; }
+
+  .exposure-block { border: 1px solid var(--border-color-default, #e0e0e0); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+  .exposure-header { padding: 7px 12px; background: var(--background-color-secondary, #f5f5f5); border-bottom: 1px solid var(--border-color-default, #e0e0e0); font-weight: 600; font-size: 12px; display: flex; gap: 8px; align-items: center; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { padding: 6px 10px; text-align: left; font-weight: 600; font-size: 11px; background: var(--background-color-secondary, #f5f5f5); color: var(--content-color-secondary, #666); text-transform: uppercase; letter-spacing: 0.4px; }
+  td { padding: 6px 10px; border-top: 1px solid var(--border-color-default, #ececec); vertical-align: top; }
+  .field-name { font-family: monospace; font-weight: 600; font-size: 12px; }
+  .sensitive { color: #c0392b; font-weight: 700; }
+  .field-val { font-family: monospace; font-size: 11px; color: var(--content-color-secondary, #777); }
+  .risk-chip { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+  .risk-critical { background: #fde8e8; color: #c0392b; }
+  .risk-high { background: #fff3e0; color: #b45309; }
+  .risk-info { background: #e3f2fd; color: #1565c0; }
+
+  .divider { border: none; border-top: 1px solid var(--border-color-default, #e0e0e0); margin: 12px 0; }
+
+  .finding-box { border-left: 3px solid #c0392b; background: var(--background-color-secondary, #f9f9f9); padding: 8px 12px; border-radius: 0 6px 6px 0; margin-bottom: 8px; }
+  .finding-box h4 { font-size: 12px; font-weight: 700; color: #c0392b; margin-bottom: 4px; }
+  .finding-box p { font-size: 12px; line-height: 1.5; color: var(--content-color-primary); }
+
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .run-meta { font-size: 11px; color: var(--content-color-secondary, #888); }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <h2>OWASP API3 — Excessive Data Exposure</h2>
+    <div style="font-size:11px;color:var(--content-color-secondary,#888);margin-top:2px;">Day-60-VAmPI-OWASP-Top10 &nbsp;·&nbsp; API3 Folder Run &nbsp;·&nbsp; http://localhost:5000</div>
+  </div>
+  <span class="badge badge-critical">2 CRITICAL FAILS</span>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="endpoint">GET /users/v1</div>
+    <div class="status-line">
+      <span class="http-status http-200">HTTP 200</span>
+      <span class="badge badge-warn">PARTIAL EXPOSURE</span>
+    </div>
+    <div class="score-row">
+      <div class="score-item"><span class="score-num pass-num">3</span><span class="score-label">PASSED</span></div>
+      <div class="score-item"><span class="score-num fail-num">2</span><span class="score-label">FAILED</span></div>
+      <div class="score-item"><span class="score-num" style="color:var(--content-color-secondary,#888)">0</span><span class="score-label">ERRORS</span></div>
+    </div>
+  </div>
+  <div class="summary-card" style="border-color:#c0392b;">
+    <div class="endpoint">GET /users/v1/_debug</div>
+    <div class="status-line">
+      <span class="http-status http-200">HTTP 200</span>
+      <span class="badge badge-critical">CRITICAL EXPOSURE</span>
+    </div>
+    <div class="score-row">
+      <div class="score-item"><span class="score-num pass-num">0</span><span class="score-label">PASSED</span></div>
+      <div class="score-item"><span class="score-num fail-num">5</span><span class="score-label">FAILED</span></div>
+      <div class="score-item"><span class="score-num err-num">1</span><span class="score-label">ERRORS</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Test Results: GET /users/v1 -->
+<div class="section">
+  <h3>Test Results</h3>
+  <div class="request-block">
+    <div class="request-header">
+      <span class="method-tag">GET</span>
+      <span class="req-name">GET All Users (Public Recon) — /users/v1</span>
+      <span class="badge badge-warn">2 FAILED</span>
+    </div>
+    <ul class="test-list">
+      <li class="test-item">
+        <span class="icon">✅</span>
+        <div><div class="test-name">GET /users/v1 returns HTTP 200</div></div>
+      </li>
+      <li class="test-item">
+        <span class="icon">✅</span>
+        <div><div class="test-name">SECURITY: User records must not expose 'password' field</div></div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: User records must not expose 'email' without authorization</div>
+          <div class="test-error">VULNERABILITY: 3 of 3 user record(s) expose 'email' to unauthenticated callers — property-level access control is absent.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: Public response must only expose safe fields (e.g. username)</div>
+          <div class="test-error">VULNERABILITY: Unexpected fields found in public /users/v1 response: [email]. Property-level filtering is not enforced.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">✅</span>
+        <div><div class="test-name">SECURITY: Raw response must not contain a 'password' key</div></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Test Results: _debug -->
+  <div class="request-block" style="border-color:#c0392b;">
+    <div class="request-header">
+      <span class="method-tag">GET</span>
+      <span class="req-name">GET Debug Endpoint (Excessive Data Exposure) — /users/v1/_debug</span>
+      <span class="badge badge-critical">5 FAILED · 1 ERROR</span>
+    </div>
+    <ul class="test-list">
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: Debug endpoint must not be publicly accessible (expect 401/403/404)</div>
+          <div class="test-error">VULNERABILITY DETECTED: /users/v1/_debug returned HTTP 200. This endpoint is accessible without authentication.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: Response must not contain a 'password' field</div>
+          <div class="test-error">VULNERABILITY: Response body contains a 'password' field — credential data is exposed to unauthenticated callers.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">⚠️</span>
+        <div>
+          <div class="test-name">SECURITY: Response must not contain bcrypt or hex password hashes</div>
+          <div class="test-error-warn">Script error — TypeError: pm.expect(...).to.be.false is not a function. (Test needs a minor fix — see note below.)</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: User records must not expose 'password' property</div>
+          <div class="test-error">VULNERABILITY: 3 of 3 user record(s) expose a 'password' field via the debug endpoint.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY: User records must not expose 'email' without access control</div>
+          <div class="test-error">VULNERABILITY: 3 of 3 user record(s) expose 'email' without any authorization check.</div>
+        </div>
+      </li>
+      <li class="test-item">
+        <span class="icon">❌</span>
+        <div>
+          <div class="test-name">SECURITY SUMMARY: _debug endpoint returned a 200 — critical data exposure confirmed</div>
+          <div class="test-error">CRITICAL FINDING: /users/v1/_debug is accessible without authentication and returned 382 bytes of internal user data.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- Exposed Data Table -->
+<div class="section">
+  <h3>Exposed Data — Actual Response Fields</h3>
+  <div class="exposure-block" style="margin-bottom:8px;">
+    <div class="exposure-header"><span>GET /users/v1</span> <span class="badge badge-warn">email leaked</span></div>
+    <table>
+      <thead><tr><th>Field</th><th>Risk</th><th>Sample Value</th></tr></thead>
+      <tbody>
+        <tr><td><span class="field-name">username</span></td><td><span class="risk-chip risk-info">Safe</span></td><td class="field-val">name1, name2, admin</td></tr>
+        <tr><td><span class="field-name sensitive">email</span></td><td><span class="risk-chip risk-high">HIGH — PII exposed</span></td><td class="field-val">mail1@mail.com, mail2@mail.com, admin@mail.com</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="exposure-block">
+    <div class="exposure-header"><span>GET /users/v1/_debug</span> <span class="badge badge-critical">plaintext passwords exposed</span></div>
+    <table>
+      <thead><tr><th>Field</th><th>Risk</th><th>Sample Value</th></tr></thead>
+      <tbody>
+        <tr><td><span class="field-name">username</span></td><td><span class="risk-chip risk-info">Safe</span></td><td class="field-val">name1, name2, admin</td></tr>
+        <tr><td><span class="field-name sensitive">password</span></td><td><span class="risk-chip risk-critical">CRITICAL — plaintext credential</span></td><td class="field-val">pass1, pass2, pass1</td></tr>
+        <tr><td><span class="field-name sensitive">email</span></td><td><span class="risk-chip risk-high">HIGH — PII exposed</span></td><td class="field-val">mail1@mail.com, admin@mail.com…</td></tr>
+        <tr><td><span class="field-name sensitive">admin</span></td><td><span class="risk-chip risk-high">HIGH — role enumeration</span></td><td class="field-val">false, false, true</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- Key Findings -->
+<div class="section">
+  <h3>Key Findings</h3>
+  <div class="finding-box">
+    <h4>CRITICAL — Plaintext Passwords via Unauthenticated Debug Endpoint</h4>
+    <p><code>/users/v1/_debug</code> returns HTTP 200 with no authentication required. All 3 user records are returned with plaintext passwords (<code>pass1</code>, <code>pass2</code>), emails, and admin role flags. This endpoint must be removed or gated behind admin authentication.</p>
+  </div>
+  <div class="finding-box" style="border-left-color:#b45309;">
+    <h4>HIGH — Email PII Exposed on Public User List</h4>
+    <p><code>/users/v1</code> returns email addresses for all 3 users (including admin) with no authentication. Only <code>username</code> should be returned from a public listing endpoint. Property-level response filtering is absent.</p>
+  </div>
+  <div class="finding-box" style="border-left-color:#b45309;">
+    <h4>HIGH — Admin Role Enumerable</h4>
+    <p>The <code>admin</code> boolean field in the <code>_debug</code> response allows attackers to identify privileged accounts for targeted attacks.</p>
+  </div>
+  <div class="finding-box" style="border-left-color:#1565c0;">
+    <h4>NOTE — Script Error on Hash Detection Test</h4>
+    <p>One test on <code>/users/v1/_debug</code> threw a <code>TypeError</code> (<code>pm.expect(...).to.be.false is not a function</code>). The assertion should use <code>.to.equal(false)</code>. This can be fixed without affecting the other results.</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+{
+  "info": {
+    "_postman_id": "36a5419c-a8ee-4a17-b3f4-9a929cfd0b11",
+    "name": "Day-60-VAmPI-OWASP-Top10",
+    "description": "Day 60 Security Testing Curriculum — VAmPI (Vulnerable API) covering the 10 core OWASP API Top 10 vulnerability vectors. All requests use {{baseUrl}} variable abstraction. No automated scripts — manual testing and payload entry only.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55615134",
+    "_collection_link": "https://go.postman.co/collection/55615134-36a5419c-a8ee-4a17-b3f4-9a929cfd0b11?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "API1 — Broken Object Level Authorization (BOLA)",
+      "item": [
+        {
+          "name": "GET Book by Name (BOLA Check)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/books/v1/:book",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "books",
+                "v1",
+                ":book"
+              ],
+              "variable": [
+                {
+                  "key": "book",
+                  "value": "bookTitle",
+                  "description": "Replace with the target book title to test cross-user access"
+                }
+              ]
+            },
+            "description": "OWASP API1 — BOLA: Retrieve a book by name. Test by substituting another user's book title to check if unauthorized access is possible. Observe whether the API enforces object-level authorization."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API1: BOLA — Access resources belonging to other users by manipulating object identifiers."
+    },
+    {
+      "name": "API2 — Broken Authentication",
+      "item": [
+        {
+          "name": "POST Login (Authentication)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const response = pm.response.json();\n\n// ── Tests ────────────────────────────────────────────────\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response contains auth_token\", function () {\n    pm.expect(response).to.have.property(\"auth_token\");\n    pm.expect(response.auth_token).to.be.a(\"string\").and.not.empty;\n});\n\n// ── Token extraction ─────────────────────────────────────\nif (pm.response.code === 200) {\n    const token = response.auth_token || response.token;\n    if (token) {\n        pm.environment.set(\"token\", token);\n        console.log(\"✅ Token saved to {{token}}:\", token);\n    } else {\n        console.warn(\"⚠️ Login succeeded but no token found in response:\", JSON.stringify(response));\n    }\n} else {\n    console.warn(\"⚠️ Login failed — status:\", pm.response.code, JSON.stringify(response));\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                "login"
+              ]
+            },
+            "description": "OWASP API2 — Broken Authentication: Submit credentials to obtain a JWT token. Test with weak/default credentials, attempt brute-force with multiple requests, and check if rate limiting or lockout mechanisms exist. Copy the returned token into the {{token}} environment variable."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API2: Broken Authentication — Test weak login mechanisms, missing brute-force protection, and token handling."
+    },
+    {
+      "name": "API3 — Broken Object Property Level Authorization (Excessive Data Exposure)",
+      "item": [
+        {
+          "name": "GET All Users (Public Recon)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/v1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1"
+              ]
+            },
+            "description": "OWASP API3 — Excessive Data Exposure: Retrieve the full user list without authentication. Inspect the response for sensitive fields such as email, role, or internal IDs that should not be publicly exposed."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Debug Endpoint (Excessive Data Exposure)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// OWASP API3 — Broken Object Property Level Authorization",
+                  "// Security Test: Debug Endpoint Must Not Be Publicly Accessible",
+                  "",
+                  "const responseCode = pm.response.code;",
+                  "",
+                  "pm.test(\"SECURITY: Debug endpoint must not be publicly accessible (expect 401/403/404)\", function () {",
+                  "    pm.expect(responseCode).to.be.oneOf([401, 403, 404],",
+                  "        `VULNERABILITY DETECTED: /users/v1/_debug returned HTTP ${responseCode}. This endpoint is accessible without authentication.`",
+                  "    );",
+                  "});",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    let body;",
+                  "    try {",
+                  "        body = pm.response.json();",
+                  "    } catch (e) {",
+                  "        body = null;",
+                  "    }",
+                  "",
+                  "    pm.test(\"SECURITY: Response must not contain a 'password' field\", function () {",
+                  "        const responseText = pm.response.text().toLowerCase();",
+                  "        pm.expect(responseText).to.not.match(/\"password\"\\s*:/i,",
+                  "            \"VULNERABILITY: Response body contains a 'password' field — credential data is exposed to unauthenticated callers.\"",
+                  "        );",
+                  "    });",
+                  "",
+                  "    pm.test(\"SECURITY: Response must not contain bcrypt or hex password hashes\", function () {",
+                  "        const bodyStr = pm.response.text();",
+                  "        const isBcrypt = /\\$2[aby]\\$\\d+\\$/.test(bodyStr);",
+                  "        const isHexHash = /\\b[a-f0-9]{32}\\b|\\b[a-f0-9]{40}\\b|\\b[a-f0-9]{64}\\b/i.test(bodyStr);",
+                  "        pm.expect(isBcrypt || isHexHash).to.be.false(",
+                  "            \"VULNERABILITY: Response appears to contain a password hash (bcrypt or hex digest) — credential data is exposed.\"",
+                  "        );",
+                  "    });",
+                  "",
+                  "    if (body) {",
+                  "        const users = body.users || (Array.isArray(body) ? body : null);",
+                  "",
+                  "        if (users && Array.isArray(users) && users.length > 0) {",
+                  "            pm.test(\"SECURITY: User records must not expose 'password' property\", function () {",
+                  "                const offenders = users.filter(u => u.hasOwnProperty(\"password\"));",
+                  "                pm.expect(offenders.length).to.equal(0,",
+                  "                    `VULNERABILITY: ${offenders.length} of ${users.length} user record(s) expose a 'password' field via the debug endpoint.`",
+                  "                );",
+                  "            });",
+                  "",
+                  "            pm.test(\"SECURITY: User records must not expose 'email' without access control\", function () {",
+                  "                const offenders = users.filter(u => u.hasOwnProperty(\"email\"));",
+                  "                pm.expect(offenders.length).to.equal(0,",
+                  "                    `VULNERABILITY: ${offenders.length} of ${users.length} user record(s) expose 'email' without any authorization check.`",
+                  "                );",
+                  "            });",
+                  "",
+                  "            const exposedFields = [...new Set(users.flatMap(u => Object.keys(u)))];",
+                  "            console.warn(\"[API3] Fields exposed by /users/v1/_debug:\", JSON.stringify(exposedFields));",
+                  "            pm.collectionVariables.set(\"api3_debug_exposed_fields\", JSON.stringify(exposedFields));",
+                  "        }",
+                  "    }",
+                  "",
+                  "    pm.test(\"SECURITY SUMMARY: _debug endpoint returned a 200 — critical data exposure confirmed\", function () {",
+                  "        pm.expect(true).to.be.false(",
+                  "            `CRITICAL FINDING: /users/v1/_debug is accessible without authentication and returned ${pm.response.text().length} bytes of internal user data. Immediate remediation required.`",
+                  "        );",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/_debug",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                "_debug"
+              ]
+            },
+            "description": "OWASP API3 — Excessive Data Exposure: Access the debug endpoint which may return all user records including plaintext passwords, hashes, or internal fields. This endpoint should not be accessible in any environment."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API3: Excessive Data Exposure — Endpoints returning more data than necessary, exposing sensitive fields."
+    },
+    {
+      "name": "API4 — Unrestricted Resource Consumption",
+      "item": [
+        {
+          "name": "POST Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\",\n  \"email\": \"testuser@vampi.local\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                "register"
+              ]
+            },
+            "description": "OWASP API4 — Unrestricted Resource Consumption: Register a new user. Test whether the API enforces rate limiting by sending repeated registration requests. Also test mass assignment by injecting extra fields such as 'admin': true in the body."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API4: Unrestricted Resource Consumption — No rate limiting on registration or resource creation endpoints."
+    },
+    {
+      "name": "API5 — Broken Function Level Authorization (Admin Actions)",
+      "item": [
+        {
+          "name": "DELETE User (Admin Deletion Check)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/:username",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                ":username"
+              ],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "description": "Target username to delete. Test with a non-admin token to check for broken function-level authorization."
+                }
+              ]
+            },
+            "description": "OWASP API5 — Broken Function Level Authorization: Attempt to delete a user account using a standard (non-admin) JWT token. If the deletion succeeds, the API fails to enforce function-level authorization on privileged operations."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API5: Broken Function Level Authorization — Non-admin users accessing admin-only functions."
+    },
+    {
+      "name": "API6 — Unrestricted Access to Sensitive Business Flows",
+      "item": [
+        {
+          "name": "POST Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"book_title\": \"Test Book\",\n  \"secret\": \"This is a secret note\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books/v1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "books",
+                "v1"
+              ]
+            },
+            "description": "OWASP API6 — Unrestricted Access to Sensitive Business Flows: Create a book resource. Test whether any authenticated user can insert resources without restriction. Also check if the 'secret' field is stored and later retrievable by other users (chained with BOLA)."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API6: Unrestricted Access to Sensitive Business Flows — Critical flows like book creation lack proper controls."
+    },
+    {
+      "name": "API7 — Server Side Request Forgery (SSRF)",
+      "item": [
+        {
+          "name": "GET Authenticated User Profile (SSRF / Info Disclosure)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "me"
+              ]
+            },
+            "description": "OWASP API7 — SSRF / Information Disclosure: Retrieve the authenticated user's profile. Inspect the response for internal metadata, server paths, or fields that could be leveraged for SSRF. Also verify that the endpoint strictly requires a valid token."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API7: SSRF — Inputs that may cause the server to make unintended internal requests."
+    },
+    {
+      "name": "API8 — Security Misconfiguration",
+      "item": [
+        {
+          "name": "GET Initialize Database (Security Misconfiguration)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/createdb",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "createdb"
+              ]
+            },
+            "description": "OWASP API8 — Security Misconfiguration: Trigger database initialization via an unauthenticated GET request. This endpoint should never be publicly accessible. Its exposure represents a critical misconfiguration — any caller can reset the entire database state."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API8: Security Misconfiguration — Exposed debug endpoints, verbose errors, and unprotected database initialization."
+    },
+    {
+      "name": "API9 — Improper Inventory Management",
+      "item": [
+        {
+          "name": "GET All Users v1 (Inventory / Version Recon)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/v1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1"
+              ]
+            },
+            "description": "OWASP API9 — Improper Inventory Management: Probe versioned endpoints to identify active API versions. Check whether older versions (v1, v2) remain accessible and whether they expose functionality that has been removed or restricted in newer versions. Document all discovered active endpoints."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API9: Improper Inventory Management — Undocumented or legacy endpoints still active in production."
+    },
+    {
+      "name": "API10 — Unsafe Consumption of APIs (Mass Assignment / Injection)",
+      "item": [
+        {
+          "name": "PUT Change Password (Unauthorized Password Change)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"newpassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/:username/password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                ":username",
+                "password"
+              ],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "description": "Test by substituting another user's username to attempt unauthorized password change."
+                }
+              ]
+            },
+            "description": "OWASP API10 — Unsafe Consumption / Mass Assignment: Attempt to change a user's password. Test by using your own token but targeting a different username in the path to check for authorization bypass. Also test injecting extra fields in the body to probe mass assignment vulnerabilities."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API10: Unsafe Consumption / Mass Assignment — Unvalidated input fields allowing privilege escalation or injection."
+    }
+  ],
+  "variable": [
+    {
+      "key": "api3_users_exposed_fields",
+      "value": ""
+    },
+    {
+      "key": "api3_debug_exposed_fields",
+      "value": ""
+    }
+  ]
+}

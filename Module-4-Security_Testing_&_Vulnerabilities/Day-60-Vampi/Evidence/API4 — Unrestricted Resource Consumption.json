@@ -1,0 +1,41 @@
+{
+      "name": "API4 — Unrestricted Resource Consumption",
+      "item": [
+        {
+          "name": "POST Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\",\n  \"email\": \"testuser@vampi.local\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                "register"
+              ]
+            },
+            "description": "OWASP API4 — Unrestricted Resource Consumption: Register a new user. Test whether the API enforces rate limiting by sending repeated registration requests. Also test mass assignment by injecting extra fields such as 'admin': true in the body."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API4: Unrestricted Resource Consumption — No rate limiting on registration or resource creation endpoints."
+    }

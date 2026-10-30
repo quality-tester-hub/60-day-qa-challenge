@@ -1,0 +1,51 @@
+{
+      "name": "API2 — Broken Authentication",
+      "item": [
+        {
+          "name": "POST Login (Authentication)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const response = pm.response.json();\n\n// ── Tests ────────────────────────────────────────────────\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response contains auth_token\", function () {\n    pm.expect(response).to.have.property(\"auth_token\");\n    pm.expect(response.auth_token).to.be.a(\"string\").and.not.empty;\n});\n\n// ── Token extraction ─────────────────────────────────────\nif (pm.response.code === 200) {\n    const token = response.auth_token || response.token;\n    if (token) {\n        pm.environment.set(\"token\", token);\n        console.log(\"✅ Token saved to {{token}}:\", token);\n    } else {\n        console.warn(\"⚠️ Login succeeded but no token found in response:\", JSON.stringify(response));\n    }\n} else {\n    console.warn(\"⚠️ Login failed — status:\", pm.response.code, JSON.stringify(response));\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/v1/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "v1",
+                "login"
+              ]
+            },
+            "description": "OWASP API2 — Broken Authentication: Submit credentials to obtain a JWT token. Test with weak/default credentials, attempt brute-force with multiple requests, and check if rate limiting or lockout mechanisms exist. Copy the returned token into the {{token}} environment variable."
+          },
+          "response": []
+        }
+      ],
+      "description": "OWASP API2: Broken Authentication — Test weak login mechanisms, missing brute-force protection, and token handling."
+    }

@@ -2,6 +2,8 @@
 
 QA/QE 60-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
 
+🎉 **The 60-Day QA Challenge is complete — all four modules are finished.**
+
 # 🚀 Module 1: UI Automation Mastery with Playwright
 
 Welcome to the central repository for Module 1 - UI Automation. This project tracks hands-on practice covering modern Web QA Automation patterns, end-to-end workflows, resilient locators, session management, dynamic element handling, and test execution using Playwright and TypeScript.
@@ -3750,10 +3752,13 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 28, 2026 | Day 57 | TryHackMe — Crack the hash and Vulnerability Capstone | DOM inspection, duplicate IDs, challenge-room review | ✅ Day completed; duplicate DOM IDs documented; Capstone not assessed (Premium-gated) |
 | October 29, 2026 | Day 58 | DemoBlaze Product Store | Responsive UI, accessibility, category pagination, catalog data, HSTS | ✅ Four requested categories documented; security finding is passive configuration evidence |
 | October 30, 2026 | Day 59 | Damn Vulnerable iOS App (DVIA-v2) | Broken Cryptography password handling; source review | 🟡 Empty-password acceptance identified in source; simulator installation and reproduction |
+| October 31, 2026 | Day 60 | VAmPI (local API security lab) | OWASP API Top 10 collection; authentication, property-level authorization, resource consumption | ✅ Final challenge day complete; selected API2, API3, and API4 evidence documented |
+
+> 🎉 **MODULE 4 COMPLETE — Security Testing & Vulnerabilities (Days 51–60)**
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
-The Day 51 session, planned for October 21, was recorded on **October 22, 2026**. In the authorized local OWASP Juice Shop lab, the Score Board showed **7/179 challenges solved**, including the pre-existing Score Board, DOM XSS, Error Handling, and Exposed Metrics completions, plus Privacy Policy, Bonus Payload, and Confidential Document completed during this session. Eleven other selected challenges remain unattempted, so Module 4 continues. The Confidential Document challenge demonstrated direct access to an unprotected file at `/ftp/acquisitions.md` (HTTP 200). See the [Day 51 README](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/README.md), [Confidential Document evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/01-Confidential-Document-Observations.md), and [status evidence for the other five solved challenges](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/02-Other-Solved-Challenges-Evidence.md).
+The Day 51 session, planned for October 21, was recorded on **October 22, 2026**. In the authorized local OWASP Juice Shop lab, the Score Board showed **7/179 challenges solved**, including the pre-existing Score Board, DOM XSS, Error Handling, and Exposed Metrics completions, plus Privacy Policy, Bonus Payload, and Confidential Document completed during this session. Eleven other selected challenges remained unattempted at the end of Day 51; the module continued with the remaining daily exercises and was completed on Day 60. The Confidential Document challenge demonstrated direct access to an unprotected file at `/ftp/acquisitions.md` (HTTP 200). See the [Day 51 README](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/README.md), [Confidential Document evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/01-Confidential-Document-Observations.md), and [status evidence for the other five solved challenges](Module-4-Security_Testing_&_Vulnerabilities/Day-51-OWASP-Juiceshop/Evidence/02-Other-Solved-Challenges-Evidence.md).
 
 ### 🗓️ October 23, 2026 — Day 52: Gin & Juice Shop
 
@@ -3786,6 +3791,10 @@ Day 58 testing of the [DemoBlaze Product Store](https://demoblaze.com/) document
 ### 🗓️ October 30, 2026 — Day 59: Damn Vulnerable iOS App (DVIA-v2)
 
 The pinned upstream source for [DVIA-v2](https://github.com/prateek147/DVIA-v2/tree/96466ab85569dbcd37c69b2d15d22ff666f57031) indicates that the Broken Cryptography password gate accepts an empty password. The project builds for the iOS Simulator with Xcode 27.1, but this machine has no installed simulator runtime, so the app could not be installed or the behavior reproduced. This is a source-level finding only; no UI bugs are reported. See the [Day 59 README](Module-4-Security_Testing_&_Vulnerabilities/Day-59-DVIA/README.md) and [source evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-59-DVIA/Evidence/Day-59-Empty-Password-Source-Evidence.md).
+
+### 🗓️ October 31, 2026 — Day 60: VAmPI API Security Testing
+
+Day 60 closed the 60-day challenge with an authorized, local VAmPI API security exercise using Postman. The collection maps requests across the OWASP API Top 10; saved evidence focuses on API2 (Broken Authentication), API3 (Broken Object Property Level Authorization), and API4 (Unrestricted Resource Consumption). The API3 assessment observed email addresses on the unauthenticated users endpoint and sensitive user properties in the debug response. The remaining categories are represented in the collection but are not claimed as assessed in the saved evidence. See the [Day 60 README](Module-4-Security_Testing_&_Vulnerabilities/Day-60-Vampi/README.md) and its [Postman collection](Module-4-Security_Testing_&_Vulnerabilities/Day-60-Vampi/Collection/Day-60-VAmPI-OWASP-Top10.postman_collection.json).
 
 # 📁 Project Structure
 
@@ -4392,10 +4401,20 @@ Module-4-Security_Testing_&_Vulnerabilities/
 │       ├── Day-58-Login-Modal.png
 │       ├── Day-58-Category-Pagination-Mix.png
 │       └── Day-58-Samsung-Galaxy-S7-Detail.png
-└── Day-59-DVIA/
-    ├── README.md
-    └── Evidence/
-        └── Day-59-Empty-Password-Source-Evidence.md
+├── Day-59-DVIA/
+│   ├── README.md
+│   └── Evidence/
+│       └── Day-59-Empty-Password-Source-Evidence.md
+└── Day-60-Vampi/
+    ├── Collection/
+    │   └── Day-60-VAmPI-OWASP-Top10.postman_collection.json
+    ├── Enviroment/
+    │   └── Day-60-VAmPI-Local-Lab.postman_environment.json
+    ├── Evidence/
+    │   ├── API2 — Broken Authentication.json
+    │   ├── API3-Security-Test-Report.html
+    │   └── API4 — Unrestricted Resource Consumption.json
+    └── README.md
 ```
 
 ---
@@ -4472,11 +4491,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 # 🚀 Current Progress
 
-**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53, Day 54, Day 55, Day 56, Day 57
+**Completed Days:** 01–27, Day 29, Day 30, Day 31, Day 32, Day 33, Day 34, Day 35, Day 36, Day 37, Day 38, Day 39, Day 40, Day 41, Day 42, Day 43, Day 44, Day 45, Day 46, Day 47, Day 48, Day 49, Day 50, Day 51, Day 52, Day 53, Day 54, Day 55, Day 56, Day 57, Day 58, Day 59, Day 60
 
 **Resume Portfolio Scope:** Modules 1–4; Module 4 — Security Testing & Vulnerabilities — is the final module featured in the resume portfolio.
 
-**Completed Modules:** Module 1, Module 2, Module 3
+**Completed Modules:** ✅ Module 1 — UI Automation; ✅ Module 2 — API Testing & DevTools; ✅ Module 3 — Deliberately Buggy Sites / Exploratory Testing; ✅ Module 4 — Security Testing & Vulnerabilities
 
 **Completed API Track:** Module 2 — API Testing
 
@@ -4484,11 +4503,13 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 59 DVIA-v2 — source-level empty-password acceptance documented; simulator reproduction pending
+**Latest Milestone:** Day 60 VAmPI — final challenge day completed; selected OWASP API security evidence documented
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 59 source-level password-handling finding documented; simulator installation and reproduction pending
+**Module 4 Status:** ✅ Complete — Days 51–60
+
+🎉 **Final Challenge Status: ✅ All four modules complete. The 60-Day QA Challenge is finished.**
 
 ## Module 3 Completion Summary
 
@@ -4497,5 +4518,11 @@ Module 3 — Deliberately Buggy Sites / Exploratory Testing — concluded on **O
 The final CrazyGames session added two confirmed, documented findings: mobile header overflow at 375 px (Low / P3) and missing accessible names on the Friends and My games controls (Medium / P2). Game-entry observations that could not be distinguished from browser/runtime limitations were explicitly left inconclusive rather than filed as bugs. The Day 50 README, individual reports, observation log, screenshot evidence, and project-tree entry are all linked above.
 
 **Final status:** ✅ Module 3 complete. The portfolio's next work can begin outside the planned Day 31–50 Module 3 sequence.
+
+## Module 4 Completion Summary
+
+Module 4 — Security Testing & Vulnerabilities — is **complete**, covering Days 51–60. The final Day 60 exercise used a local VAmPI API lab and documented selected OWASP API security testing evidence. Earlier sessions covered security-focused labs, application behavior, and evidence-based findings; the Day 51 Juice Shop challenge count and Day 59 simulator limitation are historical scope notes, not indicators that the module remains in progress.
+
+**Final status: ✅ Module 4 complete. All four modules and the 60-Day QA Challenge are finished.**
 
 ---
