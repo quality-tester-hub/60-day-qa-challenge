@@ -33,8 +33,14 @@ try {
   );
   log(`PASS: exactly ${expectedLogs.length} category-specific .log files are present`);
 
+  const evidenceContents = await Promise.all(
+    [...requiredText.keys()].map(async (fileName) => [
+      fileName,
+      await readFile(path.join(evidenceDir, fileName), "utf8"),
+    ]),
+  );
   for (const [fileName, phrases] of requiredText) {
-    const contents = await readFile(path.join(evidenceDir, fileName), "utf8");
+    const contents = evidenceContents.find(([name]) => name === fileName)[1];
     for (const phrase of phrases) {
       assert.ok(contents.includes(phrase), `${fileName} is missing required evidence field: ${phrase}`);
     }

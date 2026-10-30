@@ -1,15 +1,6 @@
-# 90-day-qa-challenge
+# 60-day-qa-challenge
 
-QA/QE 90-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
-
----
-
-## 📌 Portfolio Progress Dashboard
-
-| Latest Activity | Day | Module | Focus | Status |
-| --- | --- | --- | --- | --- |
-| October 29, 2026 | Day 58 | Module 4 — DemoBlaze | UI, API integration, backend data, and HTTPS hardening findings documented | 🟡 Four requested categories documented; no exploit attempted — [Day 58 details](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/README.md) |
-| October 28, 2026 | Day 57 | Module 4 — TryHackMe Challenges | Duplicate DOM IDs confirmed on Crack the hash; Vulnerability Capstone remains Premium-gated | ✅ Completed — [Day 57 details](Module-4-Security_Testing_&_Vulnerabilities/Day-57-TryHackMe-Challenges/README.md) |
+QA/QE 60-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
 
 # 🚀 Module 1: UI Automation Mastery with Playwright
 
@@ -3758,6 +3749,7 @@ See the [Day 50 report](Module-3-Deliberately-Buggy%20Sites_Exploratory-Testing/
 | October 27, 2026 | Day 56 | Zero Bank | Banking page exploration, sign-in redirect, account activity search | ✅ Session documented; redirect failure and search behavior recorded |
 | October 28, 2026 | Day 57 | TryHackMe — Crack the hash and Vulnerability Capstone | DOM inspection, duplicate IDs, challenge-room review | ✅ Day completed; duplicate DOM IDs documented; Capstone not assessed (Premium-gated) |
 | October 29, 2026 | Day 58 | DemoBlaze Product Store | Responsive UI, accessibility, category pagination, catalog data, HSTS | ✅ Four requested categories documented; security finding is passive configuration evidence |
+| October 30, 2026 | Day 59 | Damn Vulnerable iOS App (DVIA-v2) | Broken Cryptography password handling; source review | 🟡 Empty-password acceptance identified in source; simulator installation and reproduction |
 
 ### 🗓️ October 22, 2026 — Day 51: OWASP Juice Shop
 
@@ -3790,6 +3782,10 @@ Day 56 explored Zero Bank's public online-banking page and the Account Summary, 
 ### 🗓️ October 29, 2026 — Day 58: DemoBlaze
 
 Day 58 testing of the [DemoBlaze Product Store](https://demoblaze.com/) documented three UI/accessibility findings, one category-pagination API integration defect, one backend catalog-image mismatch, and a passive HSTS configuration weakness. Findings are supported by DOM checks, ordinary API responses, response headers, and screenshots; no exploit was attempted. See the [Day 58 README](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/README.md) and its [evidence log and screenshots](Module-4-Security_Testing_&_Vulnerabilities/Day-58-demoblaze/Evidence/).
+
+### 🗓️ October 30, 2026 — Day 59: Damn Vulnerable iOS App (DVIA-v2)
+
+The pinned upstream source for [DVIA-v2](https://github.com/prateek147/DVIA-v2/tree/96466ab85569dbcd37c69b2d15d22ff666f57031) indicates that the Broken Cryptography password gate accepts an empty password. The project builds for the iOS Simulator with Xcode 27.1, but this machine has no installed simulator runtime, so the app could not be installed or the behavior reproduced. This is a source-level finding only; no UI bugs are reported. See the [Day 59 README](Module-4-Security_Testing_&_Vulnerabilities/Day-59-DVIA/README.md) and [source evidence](Module-4-Security_Testing_&_Vulnerabilities/Day-59-DVIA/Evidence/Day-59-Empty-Password-Source-Evidence.md).
 
 # 📁 Project Structure
 
@@ -4387,15 +4383,19 @@ Module-4-Security_Testing_&_Vulnerabilities/
 │   ├── README.md
 │   └── Evidence/
 │       └── Day-57-DOM-Evidence.json
-└── Day-58-demoblaze/
+├── Day-58-demoblaze/
+│   ├── README.md
+│   └── Evidence/
+│       ├── Day-58-Read-Only-Evidence.md
+│       ├── Day-58-Product-Catalog.png
+│       ├── Day-58-Mobile-320px.png
+│       ├── Day-58-Login-Modal.png
+│       ├── Day-58-Category-Pagination-Mix.png
+│       └── Day-58-Samsung-Galaxy-S7-Detail.png
+└── Day-59-DVIA/
     ├── README.md
     └── Evidence/
-        ├── Day-58-Read-Only-Evidence.md
-        ├── Day-58-Product-Catalog.png
-        ├── Day-58-Mobile-320px.png
-        ├── Day-58-Login-Modal.png
-        ├── Day-58-Category-Pagination-Mix.png
-        └── Day-58-Samsung-Galaxy-S7-Detail.png
+        └── Day-59-Empty-Password-Source-Evidence.md
 ```
 
 ---
@@ -4484,11 +4484,11 @@ Day 50 concluded the planned Module 3 sequence with CrazyGames. Two reproducible
 
 **Latest DevTools Milestone:** Day 30 — Random User DevTools
 
-**Latest Milestone:** Day 58 DemoBlaze — UI, API-integration, backend catalog, and passive HSTS findings documented
+**Latest Milestone:** Day 59 DVIA-v2 — source-level empty-password acceptance documented; simulator reproduction pending
 
 **Module 3 Status:** ✅ Complete — Days 31–50
 
-**Module 4 Status:** 🟡 In Progress — Day 58 findings documented across UI, API, backend, and security configuration
+**Module 4 Status:** 🟡 In Progress — Day 59 source-level password-handling finding documented; simulator installation and reproduction pending
 
 ## Module 3 Completion Summary
 
