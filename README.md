@@ -45,9 +45,11 @@ Welcome to the central repository for Module 1 - UI Automation. This project tra
 
 ### 🗓️ September 2, 2026 — Day 02: Complex UI & Bug Logging (/day-2-demoQa)
 
-**Core Focus:** Handling complex UI components, dynamic waits, frames, modal dialogs, and documenting bugs.
+**Core Focus:** Automating DemoQA forms, elements, widgets, browser interactions, and documenting defects.
 
-**Key Workflows:** Form edge-case testing, element visibility validations, and writing structured bug reports under /Defects\_&\_Bugreports. Learned how to cut out dynamic ad network frames and layout-shifting elements using custom beforeEach fixtures (page.route() and page.evaluate()) for flake-free execution.
+**Key Workflows:** Form submissions, control and table interactions, widgets, popups, downloads, and ad mitigation through request interception and DOM cleanup.
+
+**What I Learned:** Organize tests around clear behaviors, assert their expected outcomes, and wait for browser events such as popups and downloads.
 
 ---
 
