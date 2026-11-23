@@ -1,6 +1,6 @@
 # 60-day-qa-challenge
 
-QA/QE 60-Day Portfolio | Resume scope: Modules 1–4, with Security Testing as the final module
+QA/QE 60-Day Portfolio | Resume scope: Module 1 — UI Automation Mastery with Playwright; Module 2 — API Testing & Browser DevTools Integration; Module 3 — Deliberately Buggy Sites — Exploratory Testing; Module 4 — Security Testing & Vulnerabilities.
 
 🎉 **The 60-Day QA Challenge is complete — all four modules are finished.**
 
