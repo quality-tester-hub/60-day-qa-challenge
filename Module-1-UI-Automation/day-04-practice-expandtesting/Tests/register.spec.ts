@@ -10,4 +10,5 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Confirm Password' }).click();
   await page.getByRole('textbox', { name: 'Confirm Password' }).fill('hood43#');
   await page.getByRole('button', { name: 'Register' }).click();
+  await expect(page.getByText(/Successfully registered/i)).toBeVisible();
 });
