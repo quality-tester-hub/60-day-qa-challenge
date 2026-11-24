@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
   await page.goto('https://qaplayground.com/bank/login');
+  await expect(page).toHaveURL(/\/bank\/login$/);
   await page.getByTestId('login-username-input').click();
   await page.getByRole('button', { name: 'Copy username standard_user' }).click();
   await page.getByTestId('login-username-input').click();
@@ -51,7 +52,6 @@ test('test', async ({ page }) => {
   await page.getByTestId('quick-action-apply-loan').click();
   await page.getByTestId('open-apply-loan-btn').click();
   await page.getByTestId('loan-type-select').click();
-  await page.getByTestId('loan-type-select').click();
   await page.getByTestId('loan-type-options').getByText('Student').click();
   await page.getByTestId('loan-type-select').click();
   await page.getByTestId('loan-type-options').getByText('Personal').click();
@@ -61,7 +61,7 @@ test('test', async ({ page }) => {
   await page.getByTestId('loan-amount-input').click();
   await page.getByTestId('loan-amount-input').fill('9999999999');
   await page.getByTestId('loan-term-select').click();
-  await page.getByTestId('apply-loan-form').click();
+  await page.getByRole('option', { name: '36 months' }).click();
   await page.getByTestId('loan-interest-rate-input').press('ArrowLeft');
   await page.getByTestId('loan-interest-rate-input').press('ArrowLeft');
   await page.getByTestId('loan-interest-rate-input').fill('4.0');
